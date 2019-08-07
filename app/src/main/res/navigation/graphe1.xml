@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
+            app:startDestination="@+id/homeFragment">
+
+    <fragment android:id="@+id/homeFragment" android:name="com.example.android.projet.HomeFragment"
+              android:label="fragment_home" tools:layout="@layout/fragment_home">
+        <action android:id="@+id/action_homeFragment_to_connecterFragment" app:destination="@id/connecterFragment"/>
+        <action android:id="@+id/action_homeFragment_to_inscrireFragment" app:destination="@id/inscrireFragment"/>
+        <action android:id="@+id/action_homeFragment_to_fragment1" app:destination="@id/fragment1"/>
+    </fragment>
+    <fragment android:id="@+id/connecterFragment" android:name="com.example.android.projet.ConnecterFragment"
+              android:label="fragment_connecter" tools:layout="@layout/fragment_connecter"/>
+    <fragment android:id="@+id/inscrireFragment" android:name="com.example.android.projet.InscrireFragment"
+              android:label="fragment_inscrire" tools:layout="@layout/fragment_inscrire"/>
+    <fragment android:id="@+id/fragment1" android:name="com.example.android.projet.Fragment1"
+              android:label="fragment_fragment1" tools:layout="@layout/fragment_fragment1"/>
+</navigation>
