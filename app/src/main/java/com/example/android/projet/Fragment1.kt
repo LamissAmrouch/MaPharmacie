@@ -9,9 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.navigation.findNavController
-import com.twilio.http.TwilioRestClient
+
+/*import com.twilio.http.TwilioRestClient
 import com.twilio.rest.api.v2010.account.MessageCreator
-import com.twilio.type.PhoneNumber
+import com.twilio.type.PhoneNumber*/
 import kotlinx.android.synthetic.main.fragment_fragment1.*
 
 
@@ -38,7 +39,7 @@ class Fragment1 : Fragment() {
             //var obj = SmsManager.getDefault()
             //obj.sendTextMessage("558757779",null, "Welcome to Ma pharmacie",null , null)
 
-            /*val TWILIO_ACCOUNT_SID= "AC5f10b34cac82dfe6a3a397bfaec4870c"
+         /*   val TWILIO_ACCOUNT_SID= "AC5f10b34cac82dfe6a3a397bfaec4870c"
             val TWILIO_AUTO_TOKEN = "b041bae2f3649ced48d1f3104fd67c90"
             val MY_PHONE_NUMBER = "+213558757779"
             val client = TwilioRestClient.Builder(TWILIO_ACCOUNT_SID,TWILIO_AUTO_TOKEN).build()
@@ -49,7 +50,7 @@ class Fragment1 : Fragment() {
                 "Merci pour inscrire à ma pharmacie"
             ).create(client)
 
-            println(message.sid) */
+            println(message.sid)*/
         }
 
         inscrire.setOnClickListener { view ->
