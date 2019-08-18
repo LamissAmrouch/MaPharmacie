@@ -1,13 +1,10 @@
 package com.example.android.projet
 
-
-import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.text.TextUtils
-import android.text.TextUtils.replace
 import android.view.ActionMode
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -17,18 +14,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import kotlinx.android.synthetic.main.content_drawer2.*
 import kotlinx.android.synthetic.main.content_menu_profile.*
 
 
-
-class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var  fragment: Fragment = Fragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_profile)
+        setContentView(R.layout.activity_drawer2)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -41,19 +40,31 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 
-        val adapter = PharmacieAdapter(this!!,getData())
-        listPharmacies.adapter = adapter
-        listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
 
-            val intent = Intent(this,DrawerActivity2::class.java)
-            intent.putExtra("pos", "i")
-            startActivity(intent)
-        }
+     val pos = intent.getIntExtra("pos",0)
+
+         val list = getData()
+
+        nom.text = list.get(pos).nom
+        adresse.text = list.get(pos).adresse
+        horaire.text = list.get(pos).horaireO
+        jours.text = list.get(pos).joursO
+        phone.text = list.get(pos). numeroTel
+        pageFB.text = list.get(pos).pageFB
+        localisation.text = list.get(pos).localisation
+
 
         navView.setNavigationItemSelectedListener(this)
 
-
+      /*  val nav = findNavController(R.id.navHost3)
+        NavigationUI.setupActionBarWithNavController(this,nav)*/
     }
+
+   /* override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.navHost)
+        return navController.navigateUp()
+    }*/
+
 
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -66,7 +77,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_profile, menu)
+        menuInflater.inflate(R.menu.drawer_activity2, menu)
         return true
     }
 
@@ -80,7 +91,6 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -92,31 +102,81 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_mes_pharmacies_de_garde -> {
-
                 var fragment = PharmaciesGardesFragment()
                 showFragment(fragment)
-                showHide(listPharmacies)
+                showHide(nom)
+                showHide(horaire)
+                showHide(jours)
+                showHide(adresse)
+                showHide(phone)
+                showHide(localisation)
+                showHide(pageFB)
+                showHide(textView10)
+                showHide(textView12)
+                showHide(textView14)
+                showHide(textView16)
+                showHide(textView8)
+                showHide(textView18)
+
             }
 
             R.id.nav_mes_commandes-> {
-
                 var fragment = MesCommandesFragment()
                 showFragment(fragment)
-                showHide(listPharmacies)
+                showHide(nom)
+                showHide(horaire)
+                showHide(jours)
+                showHide(adresse)
+                showHide(phone)
+                showHide(localisation)
+                showHide(pageFB)
+                showHide(textView10)
+                showHide(textView12)
+                showHide(textView14)
+                showHide(textView16)
+                showHide(textView8)
+                showHide(textView18)
+
             }
+
+
 
             R.id.nav_lancer_commande -> {
 
                 var fragment = NouvelleCommandeFragment()
                 showFragment(fragment)
-                showHide(listPharmacies)
+                showHide(nom)
+                showHide(horaire)
+                showHide(jours)
+                showHide(adresse)
+                showHide(phone)
+                showHide(localisation)
+                showHide(pageFB)
+                showHide(textView10)
+                showHide(textView12)
+                showHide(textView14)
+                showHide(textView16)
+                showHide(textView8)
+                showHide(textView18)
             }
 
             R.id.nav_mon_profil -> {
 
                 var fragment = MonProfilFragment()
                 showFragment(fragment)
-                showHide(listPharmacies)
+                showHide(nom)
+                showHide(horaire)
+                showHide(jours)
+                showHide(adresse)
+                showHide(phone)
+                showHide(localisation)
+                showHide(pageFB)
+                showHide(textView10)
+                showHide(textView12)
+                showHide(textView14)
+                showHide(textView16)
+                showHide(textView8)
+                showHide(textView18)
             }
 
             R.id.nav_deconnecter -> {
@@ -129,16 +189,14 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-
-
-    fun showFragment(fragment:Fragment)
-       {
-           val manager = supportFragmentManager
-           val transaction = manager.beginTransaction()
-           transaction.replace(R.id.container, fragment)
-           transaction.addToBackStack(null)
-           transaction.commit()
-       }
+    fun showFragment(fragment: Fragment)
+    {
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        transaction.replace(R.id.container2, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 
     fun showHide(view: View) {
         if (view.visibility == View.VISIBLE) {
@@ -147,7 +205,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun removeFragment(fragment:Fragment)
+    fun removeFragment(fragment: Fragment)
     {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
@@ -231,6 +289,5 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         return list
     }
-
 
 }

@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_details_pharmacie.*
-
+import kotlinx.android.synthetic.main.fragment_list_pharmacie.*
+import android.content.Intent
 
 class DetailsPharmacieFragment : Fragment() {
 
@@ -21,7 +22,9 @@ class DetailsPharmacieFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val pos  = arguments!!.getInt("pos")
+        //val pos  = arguments!!.getInt("pos")
+       /* val pos = intent.getIntExtra("pos",0)
+
         val list = getData()
 
         nom.text = list.get(pos).nom
@@ -30,7 +33,7 @@ class DetailsPharmacieFragment : Fragment() {
         jours.text = list.get(pos).joursO
         phone.text = list.get(pos). numeroTel
         pageFB.text = list.get(pos).pageFB
-        localisation.text = list.get(pos).localisation
+        localisation.text = list.get(pos).localisation*/
 
     }
 
