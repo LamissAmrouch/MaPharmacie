@@ -7,6 +7,8 @@ import com.example.android.projet.entities.Commande
 interface CommandeDAO {
     @Query("select * from commande where idC=:id")
     fun getCommande(id:Int):List<Commande>
+    @Query("select * from commande where isSynchronized=0")
+    fun getCommandeToSynchronize(): Commande
     @Insert
     fun addCommande(commande: Commande)
     @Update

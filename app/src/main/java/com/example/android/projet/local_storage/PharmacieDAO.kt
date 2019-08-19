@@ -9,6 +9,8 @@ interface PharmacieDAO {
     fun getPharmacie(id:Int):List<Pharmacie>
     @Query("select * from pharmacie where nom=:nom")
     fun getPharmacieByNom(nom:String):List<Pharmacie>
+    @Query("select * from pharmacie where isSynchronized=0")
+    fun getPharmacieToSynchronize(): Pharmacie
     @Insert
     fun addPharmacie(pharmacie: Pharmacie)
     @Update
