@@ -34,6 +34,9 @@ interface Endpoint {
     @POST("adduser")
     fun addUtilisateur(@Body utilisateur: Utilisateur): Call<String>
 
+    @POST("updateuser/{:NSS}")
+    fun updateUtilisateur(@Body utilisateur: Utilisateur): Call<String>
+
     @POST("addcommande")
     fun addCommande(@Body commande: Commande): Call<String>
 }

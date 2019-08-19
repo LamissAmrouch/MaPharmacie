@@ -41,6 +41,7 @@ class UtilisateurWorker(val ctx: Context, val workParamters: WorkerParameters) :
                 if (response.isSuccessful) {
                     user.isSynchronized=1
                     RoomService.appDatabase.getUtilisateurDAO().updateUtilisateur(user)
+                    RetrofitService.endpoint.updateUtilisateur(user)
                     future.set(Result.success())
                     Toast.makeText(ctx,"works!",Toast.LENGTH_SHORT).show()
 
