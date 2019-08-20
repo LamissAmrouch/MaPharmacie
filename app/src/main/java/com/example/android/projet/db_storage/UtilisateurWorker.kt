@@ -23,30 +23,34 @@ class UtilisateurWorker(val ctx: Context, val workParamters: WorkerParameters) :
 
     @SuppressLint("RestrictedApi")
     override fun startWork(): ListenableFuture<Result> {
-        val future = SettableFuture.create<Result>()
-        val user = RoomService.appDatabase.getUtilisateurDAO().getUserToSynchronize()
+        future = SettableFuture.create<Result>()
+        val user = RoomService.appDatabase.getUtilisateurDAO().getUserToSynchronize(0).get(0)
         addUser(user)
         return future
     }
 
     private fun addUser(user: Utilisateur) {
+        user.isSynchronized=1
         val call = RetrofitService.endpoint.addUtilisateur(user)
         call.enqueue(object : Callback<String> {
             @SuppressLint("RestrictedApi")
             override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(ctx,"im here 1",Toast.LENGTH_SHORT).show()
                 future.set(Result.retry())
             }
             @SuppressLint("RestrictedApi")
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
-                    user.isSynchronized=1
                     RoomService.appDatabase.getUtilisateurDAO().updateUtilisateur(user)
-                    RetrofitService.endpoint.updateUtilisateur(user)
                     future.set(Result.success())
-                    Toast.makeText(ctx,"works!",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ctx,"works! user'synchro ="+
+                            RoomService.appDatabase.getUtilisateurDAO().getUtilisateur(user.NSS).isSynchronized,
+                        Toast.LENGTH_SHORT).show()
 
                 } else {
                     future.set(Result.retry())
+                    Toast.makeText(ctx,"im here 2",Toast.LENGTH_SHORT).show()
+
 
                 }
             }

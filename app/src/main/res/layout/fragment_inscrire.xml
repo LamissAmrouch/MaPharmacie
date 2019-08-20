@@ -41,81 +41,80 @@
             app:layout_constraintEnd_toEndOf="@+id/imageView3" app:layout_constraintHorizontal_bias="0.649"/>
 
     <EditText
-            android:layout_width="241dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/nom"
-            android:fontFamily="@font/aclonica" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            android:fontFamily="@font/aclonica" android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="32dp"
             app:layout_constraintStart_toStartOf="parent"
             android:textAlignment="textStart" android:hint="Nom"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
-    />
+            android:layout_marginTop="16dp"/>
     <EditText
-            android:layout_width="241dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/adresse"
-            android:fontFamily="@font/aclonica" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            android:fontFamily="@font/aclonica" android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="32dp"
             app:layout_constraintStart_toStartOf="parent"
             android:textAlignment="textStart"
             android:hint="Adresse"
             app:layout_constraintTop_toBottomOf="@+id/prenom"/>
     <EditText
-            android:layout_width="241dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/prenom"
-            android:fontFamily="@font/aclonica" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            android:fontFamily="@font/aclonica" android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="32dp"
             app:layout_constraintStart_toStartOf="parent"
             android:textAlignment="textStart" android:hint="Prénom"
             app:layout_constraintTop_toBottomOf="@+id/nom"/>
     <EditText
-            android:layout_width="241dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
             android:id="@+id/nss"
             android:fontFamily="@font/aclonica"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="32dp"
             app:layout_constraintStart_toStartOf="parent" android:hint="NSS"
             app:layout_constraintTop_toBottomOf="@+id/adresse"/>
     <EditText
-            android:layout_width="241dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
             android:id="@+id/phone"
             android:fontFamily="@font/aclonica"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent" android:hint="Numéro Tél"
+            android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="32dp" app:layout_constraintStart_toStartOf="parent" android:hint="Numéro Tél"
             app:layout_constraintTop_toBottomOf="@+id/nss"/>
     <Button
             android:text="Inscrire"
             app:cornerRadius="15dp"
-            android:layout_width="116dp"
-            android:layout_height="51dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/connecterBtn" android:textSize="18sp"
             android:textAllCaps="false" android:fontFamily="@font/aclonica" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintTop_toBottomOf="@+id/phone"/>
+            app:layout_constraintTop_toBottomOf="@+id/phone" android:layout_marginTop="16dp"/>
     <TextView
             android:text="Connecter à un compte existant"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/aclonica"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="32dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"
             android:id="@+id/compteExistant"
             app:layout_constraintTop_toBottomOf="@+id/connecterBtn"
-    />
+            android:textAlignment="center" android:layout_marginTop="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

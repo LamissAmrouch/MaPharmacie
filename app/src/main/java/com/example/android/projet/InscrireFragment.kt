@@ -9,16 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import com.example.android.projet.db_storage.UtilisateurWorker
 import com.example.android.projet.entities.Utilisateur
 import com.example.android.projet.local_storage.AppDatabase
+import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.fragment_connecter.connecterBtn
 import kotlinx.android.synthetic.main.fragment_inscrire.*
-import org.jetbrains.anko.support.v4.intentFor
+
 
 class InscrireFragment : Fragment() {
     lateinit var user :Utilisateur
@@ -34,7 +32,6 @@ class InscrireFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         connecterBtn.setOnClickListener { view ->
-            var mDB: AppDatabase? = null
             user = Utilisateur(
                 nom.text.toString(),
                 prenom.text.toString(),
@@ -43,17 +40,16 @@ class InscrireFragment : Fragment() {
                 "123",
                 Integer.valueOf(nss.text.toString())
             )
-            mDB?.getUtilisateurDAO()?.addUtilisateur(user)
+            RoomService.appDatabase.getUtilisateurDAO().addUtilisateur(user)
             nom.text.clear()
             prenom.text.clear()
             adresse.text.clear()
             phone.text.clear()
             nss.text.clear()
             sync()
-            startActivity(intentFor<ConnecterFragment>("user" to user ))
-            startActivity(intentFor<ConnecterFragment>("nss" to user.NSS ))
+
             var bundle = bundleOf("nss" to user.NSS)
-            Toast.makeText(activity, "Merci pour votre inscription à Ma Pharmacie", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(activity, "Merci pour votre inscription à Ma Pharmacie", Toast.LENGTH_SHORT).show()
             //Toast.makeText(activity, "Vous allez recevoir dans quelques secondes un SMS contenant votre mot de passe", Toast.LENGTH_SHORT).show()
             view.findNavController().navigate(R.id.action_inscrireFragment_to_connecterFragment,bundle)
 
@@ -66,9 +62,12 @@ class InscrireFragment : Fragment() {
 
     private fun sync() {
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build()
-        val req = OneTimeWorkRequest.Builder(UtilisateurWorker::class.java).setConstraints(constraints).build()
+        val req = OneTimeWorkRequest.Builder(UtilisateurWorker::class.java).addTag(
+            "id1").setConstraints(
+            constraints).build()
         val workManager = WorkManager.getInstance()
-        workManager.enqueue(req)
+        workManager.enqueueUniqueWork("work", ExistingWorkPolicy.REPLACE,req)
+       // workManager.enqueue(req)
     }
 
 

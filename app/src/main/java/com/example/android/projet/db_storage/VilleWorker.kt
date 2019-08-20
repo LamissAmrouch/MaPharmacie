@@ -23,7 +23,7 @@ class VilleWorker(val ctx: Context, val workParamters: WorkerParameters) : Liste
 
     @SuppressLint("RestrictedApi")
     override fun startWork(): ListenableFuture<Result> {
-        val future = SettableFuture.create<Result>()
+        future = SettableFuture.create<Result>()
         val ville = RoomService.appDatabase.getVilleDAO().getVilleToSynchronize()
         addVille(ville)
         return future

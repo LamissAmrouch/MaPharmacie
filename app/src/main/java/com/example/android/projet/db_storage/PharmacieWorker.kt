@@ -21,7 +21,7 @@ class PharmacieWorker(val ctx: Context, val workParamters: WorkerParameters) : L
 
     @SuppressLint("RestrictedApi")
     override fun startWork(): ListenableFuture<Result> {
-        val future = SettableFuture.create<Result>()
+        future = SettableFuture.create<Result>()
         val pharmacie = RoomService.appDatabase.getPharmacieDAO().getPharmacieToSynchronize()
         addPharmacie(pharmacie)
         return future

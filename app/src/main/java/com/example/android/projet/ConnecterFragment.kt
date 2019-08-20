@@ -10,12 +10,12 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.example.android.projet.entities.Utilisateur
 import com.example.android.projet.local_storage.AppDatabase
+import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.content_drawer2.*
 import kotlinx.android.synthetic.main.fragment_connecter.*
 import kotlinx.android.synthetic.main.fragment_connecter.phone
 
 class ConnecterFragment : Fragment() {
-    lateinit var nss:Integer
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,22 +26,21 @@ class ConnecterFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         connecterBtn.setOnClickListener { view ->
-            var mDB: AppDatabase? = null
-            var user = mDB?.getUtilisateurDAO()?.findExistingUser(
+            var user = RoomService.appDatabase.getUtilisateurDAO().findExistingUser(
                 Integer.valueOf(phone.text.toString()),
                 mdp.text.toString()
-                )
+            )
             if (user != null) {
                 phone.text.clear()
                 mdp.text.clear()
 
                 val nss = arguments?.getInt("nss")
-                if (arguments?.getInt("nss") == null)  // la premiere connexion il doit changer son mot de passe
+                if (arguments?.getInt("nss") == null)
                 {
                     var bundle = bundleOf("nss" to user.NSS)
                     view.findNavController().navigate(R.id.action_connecterFragment_to_menu_profile2,bundle)
                 }
-                else
+                else // la premiere connexion il doit changer son mot de passe
                 {
                     var bundle = bundleOf("nss" to nss)
                     view.findNavController().navigate(R.id.action_connecterFragment_to_changementMdpFragment,bundle)

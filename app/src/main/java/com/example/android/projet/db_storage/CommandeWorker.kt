@@ -22,7 +22,7 @@ class CommandeWorker(val ctx: Context, val workParamters: WorkerParameters) : Li
 
     @SuppressLint("RestrictedApi")
     override fun startWork(): ListenableFuture<Result> {
-        val future = SettableFuture.create<Result>()
+        future = SettableFuture.create<Result>()
         val commande = RoomService.appDatabase.getCommandeDAO().getCommandeToSynchronize()
         addCommande(commande)
         return future
