@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
-            android:id="@+id/phone"
+            android:id="@+id/caisse"
             android:fontFamily="@font/aclonica"
             android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="32dp" app:layout_constraintStart_toStartOf="parent" android:hint="Numéro Tél"

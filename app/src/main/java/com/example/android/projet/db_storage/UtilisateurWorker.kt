@@ -35,7 +35,7 @@ class UtilisateurWorker(val ctx: Context, val workParamters: WorkerParameters) :
         call.enqueue(object : Callback<String> {
             @SuppressLint("RestrictedApi")
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(ctx,"im here 1",Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx,"user not inserted : problem at server",Toast.LENGTH_SHORT).show()
                 future.set(Result.retry())
             }
             @SuppressLint("RestrictedApi")
@@ -43,13 +43,13 @@ class UtilisateurWorker(val ctx: Context, val workParamters: WorkerParameters) :
                 if (response.isSuccessful) {
                     RoomService.appDatabase.getUtilisateurDAO().updateUtilisateur(user)
                     future.set(Result.success())
-                    Toast.makeText(ctx,"works! user'synchro ="+
+                    /*Toast.makeText(ctx,"works! user'synchro ="+
                             RoomService.appDatabase.getUtilisateurDAO().getUtilisateur(user.NSS).isSynchronized,
-                        Toast.LENGTH_SHORT).show()
+                        Toast.LENGTH_SHORT).show() */
 
                 } else {
                     future.set(Result.retry())
-                    Toast.makeText(ctx,"im here 2",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ctx,"user not inserted",Toast.LENGTH_SHORT).show()
 
 
                 }

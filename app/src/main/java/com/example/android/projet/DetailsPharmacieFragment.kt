@@ -38,6 +38,7 @@ class DetailsPharmacieFragment : Fragment() {
     }
 
     fun getData(): List<Pharm> {
+
         val list = mutableListOf<Pharm>()
         list.add(
             Pharm(

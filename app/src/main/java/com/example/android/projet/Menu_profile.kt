@@ -17,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
+import com.example.android.projet.db_storage.RetrofitService
+import com.example.android.projet.entities.Pharmacie
+import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.content_menu_profile.*
 
 
@@ -41,7 +44,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 
-        val adapter = PharmacieAdapter(this!!,getData())
+        val adapter = PharmacieAdapter(this,getData())
         listPharmacies.adapter = adapter
         listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
 
@@ -156,9 +159,9 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         transaction.commit()
     }
 
-    fun getData(): List<Pharm> {
-        val list = mutableListOf<Pharm>()
-        list.add(
+    fun getData(): List<Pharmacie> {
+        val list = RoomService.appDatabase.getPharmacieDAO().getAllPharmacies()
+        /*list.add(
             Pharm(
                 "pharmacie1",
                 "Bab Zouar",
@@ -228,7 +231,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 "www.googlemap.com/MaPharmacie"
 
             )
-        )
+        ) */
         return list
     }
 

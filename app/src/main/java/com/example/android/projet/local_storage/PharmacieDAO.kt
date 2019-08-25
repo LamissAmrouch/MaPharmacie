@@ -5,6 +5,9 @@ import com.example.android.projet.entities.Pharmacie
 
 @Dao
 interface PharmacieDAO {
+    @Query("select * from pharmacie")
+    fun getAllPharmacies():List<Pharmacie>
+
     @Query("select * from pharmacie where idP=:id")
     fun getPharmacie(id:Int):List<Pharmacie>
     @Query("select * from pharmacie where nom=:nom")

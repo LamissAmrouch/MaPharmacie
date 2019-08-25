@@ -13,7 +13,6 @@ import androidx.work.*
 import com.example.android.projet.db_storage.RetrofitService
 import com.example.android.projet.db_storage.UtilisateurWorker
 import com.example.android.projet.entities.Utilisateur
-import com.example.android.projet.local_storage.AppDatabase
 import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.fragment_connecter.connecterBtn
 import kotlinx.android.synthetic.main.fragment_inscrire.*
@@ -42,16 +41,11 @@ class InscrireFragment : Fragment() {
                 nom.text.toString(),
                 prenom.text.toString(),
                 adresse.text.toString(),
-                Integer.valueOf(phone.text.toString()),
+                Integer.valueOf(caisse.text.toString()),
                 pass,
                 Integer.valueOf(nss.text.toString())
             )
             RoomService.appDatabase.getUtilisateurDAO().addUtilisateur(user)
-            nom.text.clear()
-            prenom.text.clear()
-            adresse.text.clear()
-            phone.text.clear()
-            nss.text.clear()
             sensSMS(pass)
 
             sync()
@@ -59,12 +53,19 @@ class InscrireFragment : Fragment() {
             var bundle = bundleOf("nss" to user.NSS)
             Toast.makeText(
                 activity,
-                "Merci pour votre inscription à Ma Pharmacie",
+                "Inscription Réussi !\n" +
+                        "Vous recevrez votre code en SMS",
                 Toast.LENGTH_SHORT
             ).show()
+
+            nom.text.clear()
+            prenom.text.clear()
+            adresse.text.clear()
+            caisse.text.clear()
+            nss.text.clear()
+
             view.findNavController()
                 .navigate(R.id.action_inscrireFragment_to_connecterFragment, bundle)
-
         }
 
         compteExistant.setOnClickListener { view ->
@@ -78,12 +79,8 @@ class InscrireFragment : Fragment() {
             call.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>?, response: Response<String>?) {
                     if (response?.isSuccessful!!) {
-                        Toast.makeText(
-                            activity,
-                            "Vous recevrez votre code en SMS",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else Toast.makeText(activity, "SMS non envoyé ", Toast.LENGTH_SHORT).show()
+                       // Toast.makeText(      activity, "Vous recevrez votre code en SMS",Toast.LENGTH_SHORT).show()
+                    } //else Toast.makeText(activity, "SMS non envoyé ", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onFailure(call: Call<String>?, t: Throwable?) {
@@ -108,7 +105,7 @@ class InscrireFragment : Fragment() {
         val constraints =
             Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build()
         val req = OneTimeWorkRequest.Builder(UtilisateurWorker::class.java).addTag(
-            "id1"
+            "td1"
         ).setConstraints(
             constraints
         ).build()

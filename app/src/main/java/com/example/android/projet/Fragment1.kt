@@ -21,6 +21,7 @@ import com.twilio.rest.api.v2010.account.MessageCreator
 import com.twilio.type.PhoneNumber */
 import kotlinx.android.synthetic.main.fragment_fragment1.*
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.work.ListenableWorker
 import com.example.android.projet.db_storage.RetrofitService
 import retrofit2.Call
@@ -44,9 +45,10 @@ class Fragment1 : Fragment() {
     @SuppressLint("UnlocalizedSms")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        var nss = arguments?.getInt("nss")
+        var bundle = bundleOf("nss" to nss)
         commencer.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_fragment1_to_listPharmacieFragment)
+            view.findNavController().navigate(R.id.action_fragment1_to_listPharmacieFragment,bundle)
         }
 
         inscrire.setOnClickListener { view ->
@@ -54,7 +56,7 @@ class Fragment1 : Fragment() {
         }
 
         connecter.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_fragment1_to_connecterFragment)
+            view.findNavController().navigate(R.id.action_fragment1_to_connecterFragment,bundle)
         }
     }
 

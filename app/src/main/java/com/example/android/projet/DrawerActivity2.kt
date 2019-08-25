@@ -2,9 +2,6 @@ package com.example.android.projet
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.ActionMode
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -15,10 +12,11 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
+import com.example.android.projet.db_storage.RetrofitService
+import com.example.android.projet.entities.Pharmacie
+import com.example.android.projet.entities.Ville
+import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.content_drawer2.*
-import kotlinx.android.synthetic.main.content_menu_profile.*
 
 
 class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -47,11 +45,12 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         nom.text = list.get(pos).nom
         adresse.text = list.get(pos).adresse
-        horaire.text = list.get(pos).horaireO
-        jours.text = list.get(pos).joursO
-        phone.text = list.get(pos). numeroTel
-        pageFB.text = list.get(pos).pageFB
-        localisation.text = list.get(pos).localisation
+        horaire_ouverture.text = "2015"//list.get(pos).horaire_ouverture
+        horaire_fermeture.text ="2019" //list.get(pos).horaire_fermeture
+        caisse.text = list.get(pos).caisse
+        ville.text =findVille(list.get(pos).id_ville!!).nomV
+        lien_fb.text = list.get(pos).lien_fb
+        lien_localisation.text = list.get(pos).lien_localisation
 
 
         navView.setNavigationItemSelectedListener(this)
@@ -60,10 +59,14 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         NavigationUI.setupActionBarWithNavController(this,nav)*/
     }
 
-   /* override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.navHost)
-        return navController.navigateUp()
-    }*/
+    private fun findVille(id:Int): Ville {
+        return RoomService.appDatabase.getVilleDAO().getVille(id).get(0)
+    }
+
+    /* override fun onSupportNavigateUp(): Boolean {
+         val navController = findNavController(R.id.navHost)
+         return navController.navigateUp()
+     }*/
 
 
     override fun onBackPressed() {
@@ -105,12 +108,12 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 var fragment = PharmaciesGardesFragment()
                 showFragment(fragment)
                 showHide(nom)
-                showHide(horaire)
-                showHide(jours)
+                showHide(horaire_ouverture)
+                showHide(horaire_fermeture)
                 showHide(adresse)
-                showHide(phone)
-                showHide(localisation)
-                showHide(pageFB)
+                showHide(caisse)
+                showHide(lien_localisation)
+                showHide(lien_fb)
                 showHide(textView10)
                 showHide(textView12)
                 showHide(textView14)
@@ -124,12 +127,12 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 var fragment = MesCommandesFragment()
                 showFragment(fragment)
                 showHide(nom)
-                showHide(horaire)
-                showHide(jours)
+                showHide(horaire_ouverture)
+                showHide(horaire_fermeture)
                 showHide(adresse)
-                showHide(phone)
-                showHide(localisation)
-                showHide(pageFB)
+                showHide(caisse)
+                showHide(lien_localisation)
+                showHide(lien_fb)
                 showHide(textView10)
                 showHide(textView12)
                 showHide(textView14)
@@ -146,12 +149,12 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 var fragment = NouvelleCommandeFragment()
                 showFragment(fragment)
                 showHide(nom)
-                showHide(horaire)
-                showHide(jours)
+                showHide(horaire_ouverture)
+                showHide(horaire_fermeture)
                 showHide(adresse)
-                showHide(phone)
-                showHide(localisation)
-                showHide(pageFB)
+                showHide(caisse)
+                showHide(lien_localisation)
+                showHide(lien_fb)
                 showHide(textView10)
                 showHide(textView12)
                 showHide(textView14)
@@ -165,12 +168,12 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 var fragment = MonProfilFragment()
                 showFragment(fragment)
                 showHide(nom)
-                showHide(horaire)
-                showHide(jours)
+                showHide(horaire_ouverture)
+                showHide(horaire_fermeture)
                 showHide(adresse)
-                showHide(phone)
-                showHide(localisation)
-                showHide(pageFB)
+                showHide(caisse)
+                showHide(lien_localisation)
+                showHide(lien_fb)
                 showHide(textView10)
                 showHide(textView12)
                 showHide(textView14)
@@ -214,9 +217,9 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         transaction.commit()
     }
 
-    fun getData(): List<Pharm> {
-        val list = mutableListOf<Pharm>()
-        list.add(
+    fun getData(): List<Pharmacie> {
+        val list = RoomService.appDatabase.getPharmacieDAO().getAllPharmacies()
+        /*list.add(
             Pharm(
                 "pharmacie1",
                 "Bab Zouar",
@@ -286,7 +289,7 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 "www.googlemap.com/MaPharmacie"
 
             )
-        )
+        ) */
         return list
     }
 

@@ -1,5 +1,4 @@
 package com.example.android.projet
-import android.app.Person
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,12 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
-import com.example.android.projet.entities.Utilisateur
-import com.example.android.projet.local_storage.AppDatabase
 import com.example.android.projet.local_storage.RoomService
-import kotlinx.android.synthetic.main.content_drawer2.*
 import kotlinx.android.synthetic.main.fragment_connecter.*
-import kotlinx.android.synthetic.main.fragment_connecter.phone
+import kotlinx.android.synthetic.main.fragment_connecter.caisse
 
 class ConnecterFragment : Fragment() {
     override fun onCreateView(
@@ -27,11 +23,11 @@ class ConnecterFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         connecterBtn.setOnClickListener { view ->
             var user = RoomService.appDatabase.getUtilisateurDAO().findExistingUser(
-                Integer.valueOf(phone.text.toString()),
+                Integer.valueOf(caisse.text.toString()),
                 mdp.text.toString()
             )
             if (user != null) {
-                phone.text.clear()
+                caisse.text.clear()
                 mdp.text.clear()
 
                 val nss = arguments?.getInt("nss")

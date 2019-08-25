@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
+import com.example.android.projet.entities.Pharmacie
+import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.fragment_connecter.*
 import kotlinx.android.synthetic.main.fragment_list_pharmacie.*
 
@@ -33,9 +35,11 @@ class ListPharmacieFragment : Fragment() {
         }
     }
 
-    fun getData(): List<Pharm> {
-        val list = mutableListOf<Pharm>()
-        list.add(
+    fun getData(): List<Pharmacie> {
+        val list = RoomService.appDatabase.getPharmacieDAO().getAllPharmacies()
+        return list
+
+        /*list.add(
             Pharm(
                 "pharmacie1",
                 "Bab Zouar",
@@ -105,8 +109,7 @@ class ListPharmacieFragment : Fragment() {
                 "www.googlemap.com/MaPharmacie"
 
             )
-        )
-        return list
+        ) */
     }
 
 }
