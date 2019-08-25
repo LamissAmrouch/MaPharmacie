@@ -35,16 +35,18 @@ class ConnecterFragment : Fragment() {
                 mdp.text.clear()
 
                 val nss = arguments?.getInt("nss")
-                if (arguments?.getInt("nss") == null)
-                {
-                    var bundle = bundleOf("nss" to user.NSS)
-                    view.findNavController().navigate(R.id.action_connecterFragment_to_menu_profile2,bundle)
-                }
-                else // la premiere connexion il doit changer son mot de passe
+                val firstTime = user.first
+                if (arguments?.getInt("nss") != null || firstTime==1)
                 {
                     var bundle = bundleOf("nss" to nss)
                     view.findNavController().navigate(R.id.action_connecterFragment_to_changementMdpFragment,bundle)
                 }
+                else // la premiere connexion il doit changer son mot de passe
+                {
+                    var bundle = bundleOf("nss" to user.NSS)
+                    view.findNavController().navigate(R.id.action_connecterFragment_to_menu_profile2,bundle)
+                }
+
             }
             else{
                 Toast.makeText(activity, "Erreur d'authentification", Toast.LENGTH_SHORT).show()

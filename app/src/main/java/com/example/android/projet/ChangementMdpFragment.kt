@@ -40,6 +40,7 @@ class ChangementMdpFragment : Fragment() {
                 if(newMdp1.equals(newMdp2)){
                     var user = RoomService.appDatabase.getUtilisateurDAO().getUtilisateur(nss)
                     user.mot_de_passe= newMdp1
+                    user.first=0
                     RoomService.appDatabase.getUtilisateurDAO().updateUtilisateur(user)
                     RetrofitService.endpoint.updateUtilisateur(user)
                     view.findNavController().navigate(R.id.action_changementMdpFragment_to_menu_profile2,bundleOf("nss" to nss))

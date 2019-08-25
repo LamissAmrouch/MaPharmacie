@@ -16,5 +16,6 @@ data class Utilisateur (
     var mot_de_passe:String,
     @PrimaryKey
     var NSS:Int?=null,
-    var isSynchronized:Int =0
+    var isSynchronized:Int =0,
+    var first:Int = 1
     )

@@ -1,3 +1,3 @@
 package com.example.android.projet
 
-val DB_VERSION= 3
+val DB_VERSION= 1

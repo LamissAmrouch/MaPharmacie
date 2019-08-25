@@ -46,7 +46,6 @@ class VilleWorker(val ctx: Context, val workParamters: WorkerParameters) : Liste
 
                 } else {
                     future.set(Result.retry())
-
                 }
             }
         })
