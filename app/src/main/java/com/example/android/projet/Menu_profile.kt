@@ -128,12 +128,7 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 showHide(listPharmacies)
             }
 
-            R.id.nav_mon_profil -> {
 
-                var fragment = MonProfilFragment()
-                showFragment(fragment)
-                showHide(listPharmacies)
-            }
 
             R.id.nav_deconnecter -> {
             }

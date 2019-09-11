@@ -134,24 +134,7 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 showHide(textView18)
             }
 
-            R.id.nav_mon_profil -> {
 
-                var fragment = MonProfilFragment()
-                showFragment(fragment)
-                showHide(nom)
-                showHide(horaire)
-                showHide(jours)
-                showHide(adresse)
-                showHide(phone)
-                showHide(localisation)
-                showHide(pageFB)
-                showHide(textView10)
-                showHide(textView12)
-                showHide(textView14)
-                showHide(textView16)
-                showHide(textView8)
-                showHide(textView18)
-            }
 
             R.id.nav_deconnecter -> {
             }
