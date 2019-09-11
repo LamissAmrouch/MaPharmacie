@@ -11,12 +11,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.android.projet.db_storage.RetrofitService
 import com.example.android.projet.entities.Pharmacie
 import com.example.android.projet.entities.Ville
 import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.content_drawer2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -217,8 +221,26 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         transaction.commit()
     }
 
-    fun getData(): List<Pharmacie> {
-        val list = RoomService.appDatabase.getPharmacieDAO().getAllPharmacies()
+    fun getData(): List<Pharmacie>? {
+       // val list = RoomService.appDatabase.getPharmacieDAO().getAllPharmacies()
+        val call = RetrofitService.endpoint.getPharmacies()
+        var list= List<Pharmacie>()
+        call.enqueue(object: Callback<List<Pharmacie>> {
+            override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
+                if(response?.isSuccessful!!) {
+                     list = response.body()
+                    return list
+                }
+                else {
+                    Toast.makeText(this@DrawerActivity2,"fail 2!", Toast.LENGTH_SHORT).show()
+                    return null
+                }
+            }
+            override fun onFailure(call: Call<List<Pharmacie>>?, t: Throwable?) {
+                Toast.makeText(this@DrawerActivity2,"fail1!", Toast.LENGTH_SHORT).show()
+                return null
+            }
+        })
         /*list.add(
             Pharm(
                 "pharmacie1",
@@ -290,7 +312,7 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             )
         ) */
-        return list
+        //return list
     }
 
 }

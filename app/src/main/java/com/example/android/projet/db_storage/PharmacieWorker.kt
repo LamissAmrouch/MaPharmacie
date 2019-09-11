@@ -29,7 +29,7 @@ class PharmacieWorker(val ctx: Context, val workParamters: WorkerParameters) : L
 
     private fun addPharmacie(pharmacie: Pharmacie) {
         val call = RetrofitService.endpoint.addPharmacie(pharmacie)
-        call.enqueue(object : Callback<String> {
+            call.enqueue(object : Callback<String> {
             @SuppressLint("RestrictedApi")
             override fun onFailure(call: Call<String>, t: Throwable) {
                 future.set(Result.retry())
@@ -40,6 +40,8 @@ class PharmacieWorker(val ctx: Context, val workParamters: WorkerParameters) : L
                     pharmacie.isSynchronized=1
                     RoomService.appDatabase.getPharmacieDAO().updatePharmacie(pharmacie)
                     future.set(Result.success())
+                    Toast.makeText(ctx,"works!",Toast.LENGTH_SHORT).show()
+
                     Toast.makeText(ctx,"works!",Toast.LENGTH_SHORT).show()
 
                 } else {
