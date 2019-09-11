@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlin.String.Companion as String1
-import com.google.firebase.auth.AuthResult
 import androidx.annotation.NonNull
 import com.google.android.gms.tasks.OnCompleteListener
 

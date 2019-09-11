@@ -41,18 +41,9 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-<<<<<<< HEAD
-
-
-
-     val pos = intent.getIntExtra("pos",0)
-
-         val list = getData()
-=======
         val pos = intent.getIntExtra("pos",0)
 
         val list = getData()
->>>>>>> LamissBranch
 
         nom.text = list.get(pos).nom
         adresse.text = list.get(pos).adresse
