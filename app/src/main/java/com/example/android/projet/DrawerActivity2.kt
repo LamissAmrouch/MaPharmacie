@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.ActionMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -19,6 +20,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.content_drawer2.*
 import kotlinx.android.synthetic.main.content_menu_profile.*
+import kotlinx.android.synthetic.main.content_drawer2.*
+
 
 
 class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -38,12 +41,18 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+<<<<<<< HEAD
 
 
 
      val pos = intent.getIntExtra("pos",0)
 
          val list = getData()
+=======
+        val pos = intent.getIntExtra("pos",0)
+
+        val list = getData()
+>>>>>>> LamissBranch
 
         nom.text = list.get(pos).nom
         adresse.text = list.get(pos).adresse
@@ -55,15 +64,7 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
         navView.setNavigationItemSelectedListener(this)
-
-      /*  val nav = findNavController(R.id.navHost3)
-        NavigationUI.setupActionBarWithNavController(this,nav)*/
     }
-
-   /* override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.navHost)
-        return navController.navigateUp()
-    }*/
 
 
     override fun onBackPressed() {
@@ -102,21 +103,8 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
 
             R.id.nav_mes_pharmacies_de_garde -> {
-                var fragment = PharmaciesGardesFragment()
-                showFragment(fragment)
-                showHide(nom)
-                showHide(horaire)
-                showHide(jours)
-                showHide(adresse)
-                showHide(phone)
-                showHide(localisation)
-                showHide(pageFB)
-                showHide(textView10)
-                showHide(textView12)
-                showHide(textView14)
-                showHide(textView16)
-                showHide(textView8)
-                showHide(textView18)
+            val intent = Intent(this,MapActivity::class.java)
+            startActivity(intent)
 
             }
 

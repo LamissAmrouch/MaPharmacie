@@ -1,13 +1,9 @@
 package com.example.android.projet
 
 
-import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.text.TextUtils
-import android.text.TextUtils.replace
-import android.view.ActionMode
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -17,12 +13,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.content_menu_profile.*
+import kotlinx.android.synthetic.main.fragment_nouvelle_commande.*
+import kotlin.String.Companion as String1
 
 
+class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
 
-class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+    //val PLACE_PIKCER_REQUEST : Int = 1
 
     var  fragment: Fragment = Fragment()
 
@@ -39,21 +39,36 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-
-
         val adapter = PharmacieAdapter(this!!,getData())
         listPharmacies.adapter = adapter
         listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
 
             val intent = Intent(this,DrawerActivity2::class.java)
-            intent.putExtra("pos", "i")
+            intent.putExtra("pos", i)
             startActivity(intent)
         }
 
         navView.setNavigationItemSelectedListener(this)
 
+        /*pickBtn.setOnClickListener { //PlacePicker Code
+            val builder : PlacePicker.IntentBuilder = PlacePicker.IntentBuilder()
+            val intent : Intent
 
+            try {
+                intent = builder.build(this)
+                startActivityForResult(intent,PLACE_PIKCER_REQUEST)
+            }
+            catch (e : GooglePlayServicesRepairableException)
+            {
+                e.printStackTrace()
+            }
+            catch (e : GooglePlayServicesNotAvailableException)
+            {
+                e.printStackTrace()
+            }*/
     }
+
+
 
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -93,9 +108,10 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_mes_pharmacies_de_garde -> {
 
-                var fragment = PharmaciesGardesFragment()
-                showFragment(fragment)
                 showHide(listPharmacies)
+                val intent = Intent(this,MapActivity::class.java)
+                startActivity(intent)
+
             }
 
             R.id.nav_mes_commandes-> {
@@ -231,6 +247,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         return list
     }
+
 
 
 }
