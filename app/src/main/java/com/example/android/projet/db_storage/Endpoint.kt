@@ -28,12 +28,19 @@ interface Endpoint {
     @POST("addville")
     fun addVille(@Body ville:Ville): Call<String>
 
+    @POST("sendSms")
+    fun sendSMS(@Body password :String): Call<String>
+
     @POST("addpharmacie")
     fun addPharmacie(@Body pharmacie:Pharmacie): Call<String>
 
     @POST("adduser")
     fun addUtilisateur(@Body utilisateur: Utilisateur): Call<String>
 
+    @POST("updateuser")
+    fun updateUtilisateur(@Body utilisateur: Utilisateur): Call<String>
+
     @POST("addcommande")
     fun addCommande(@Body commande: Commande): Call<String>
+
 }

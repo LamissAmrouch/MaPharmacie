@@ -5,10 +5,15 @@ import com.example.android.projet.entities.Pharmacie
 
 @Dao
 interface PharmacieDAO {
+    @Query("select * from pharmacie")
+    fun getAllPharmacies():List<Pharmacie>
+
     @Query("select * from pharmacie where idP=:id")
     fun getPharmacie(id:Int):List<Pharmacie>
     @Query("select * from pharmacie where nom=:nom")
     fun getPharmacieByNom(nom:String):List<Pharmacie>
+    @Query("select * from pharmacie where isSynchronized=0")
+    fun getPharmacieToSynchronize(): Pharmacie
     @Insert
     fun addPharmacie(pharmacie: Pharmacie)
     @Update

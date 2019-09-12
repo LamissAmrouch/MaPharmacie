@@ -21,7 +21,8 @@ data class Pharmacie (
     var lien_fb:String,
     var lien_localisation:String,
     val id_ville: Int?,
-    var caisse:String
+    var caisse:String,
+    var isSynchronized:Int =0
     ) {
     @PrimaryKey(autoGenerate = true)
     var idP:Int?=null

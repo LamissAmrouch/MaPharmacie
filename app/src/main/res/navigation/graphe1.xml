@@ -33,7 +33,9 @@
                 app:destination="@id/listPharmacieFragment"/>
     </fragment>
     <fragment android:id="@+id/changementMdpFragment" android:name="com.example.android.projet.ChangementMdpFragment"
-              android:label="Ma Pharmacie" tools:layout="@layout/fragment_changement_mdp"/>
+              android:label="Ma Pharmacie" tools:layout="@layout/fragment_changement_mdp">
+        <action android:id="@+id/action_changementMdpFragment_to_menu_profile2" app:destination="@id/menu_profile2"/>
+    </fragment>
     <fragment android:id="@+id/listPharmacieFragment" android:name="com.example.android.projet.ListPharmacieFragment"
               android:label="Ma Pharmacie" tools:layout="@layout/fragment_list_pharmacie">
         <action android:id="@+id/action_listPharmacieFragment_to_detailsPharmacieFragment"

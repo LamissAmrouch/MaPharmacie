@@ -4,33 +4,50 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
+import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.fragment_connecter.*
+import kotlinx.android.synthetic.main.fragment_connecter.caisse
 
 class ConnecterFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_connecter, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        val one: Int
-        one = 1
         connecterBtn.setOnClickListener { view ->
-            if ( one == 0 ) // la premiere connexion il doit changer son mot de passe
-            {
-                view.findNavController().navigate(R.id.action_connecterFragment_to_changementMdpFragment)
+            var user = RoomService.appDatabase.getUtilisateurDAO().findExistingUser(
+                Integer.valueOf(caisse.text.toString()),
+                mdp.text.toString()
+            )
+            if (user != null) {
+                caisse.text.clear()
+                mdp.text.clear()
+
+                val nss = arguments?.getInt("nss")
+                val firstTime = user.first
+                if (arguments?.getInt("nss") != null || firstTime==1)
+                {
+                    var bundle = bundleOf("nss" to nss)
+                    view.findNavController().navigate(R.id.action_connecterFragment_to_changementMdpFragment,bundle)
+                }
+                else // la premiere connexion il doit changer son mot de passe
+                {
+                    var bundle = bundleOf("nss" to user.NSS)
+                    view.findNavController().navigate(R.id.action_connecterFragment_to_menu_profile2,bundle)
+                }
+
             }
-            else
-            {
-                view.findNavController().navigate(R.id.action_connecterFragment_to_menu_profile2)
+            else{
+                Toast.makeText(activity, "Erreur d'authentification", Toast.LENGTH_SHORT).show()
             }
+
 
         }
 

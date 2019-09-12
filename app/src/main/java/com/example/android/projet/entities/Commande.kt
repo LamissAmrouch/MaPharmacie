@@ -25,7 +25,8 @@ data class Commande (
     var photo_ordonnance:String,
     var etat_traitement:String,
     val id_pharmacie: Int,
-    val id_utilisateur: Int
+    val id_utilisateur: Int,
+    var isSynchronized:Int =0
     ) {
     @PrimaryKey(autoGenerate = true)
     var idC:Int?=null

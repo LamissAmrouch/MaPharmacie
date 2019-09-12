@@ -18,7 +18,7 @@
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/horaire" android:textSize="18sp"
+            android:id="@+id/horaire_ouverture" android:textSize="18sp"
             android:fontFamily="@font/aclonica"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView10" android:layout_marginStart="8dp"
@@ -36,24 +36,28 @@
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/jours" android:textSize="18sp"
+            android:id="@+id/horaire_fermeture" android:textSize="18sp"
             android:fontFamily="@font/aclonica"
             app:layout_constraintStart_toEndOf="@+id/textView12"
             android:layout_marginStart="8dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView12" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.003"
             android:textColor="#000000"/>
+
     <TextView
-            android:text="Jours : "
+            android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView12" android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/aclonica"
+            android:text="Horaire de fermeture : "
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline24"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="@+id/guideline23"
-            android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/guideline24"
-            android:textColor="#000000"/>
+            app:layout_constraintTop_toTopOf="@+id/guideline23" />
     <TextView
             android:text="Adresse : "
             android:layout_width="wrap_content"
@@ -97,7 +101,7 @@
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/phone" android:fontFamily="@font/aclonica"
+            android:id="@+id/caisse" android:fontFamily="@font/aclonica"
             app:layout_constraintStart_toEndOf="@+id/textView14" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.016" app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
@@ -123,7 +127,7 @@
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/localisation" android:fontFamily="@font/aclonica"
+            android:id="@+id/lien_localisation" android:fontFamily="@font/aclonica"
             app:layout_constraintStart_toEndOf="@+id/textView18" android:layout_marginStart="8dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView18" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintHorizontal_bias="0.0" android:textSize="18sp"
@@ -131,7 +135,7 @@
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/pageFB" android:fontFamily="@font/aclonica"
+            android:id="@+id/lien_fb" android:fontFamily="@font/aclonica"
             app:layout_constraintStart_toEndOf="@+id/textView16" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBaseline_toBaselineOf="@+id/textView16"

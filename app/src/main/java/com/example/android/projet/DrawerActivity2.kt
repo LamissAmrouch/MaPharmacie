@@ -2,6 +2,9 @@ package com.example.android.projet
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.ActionMode
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -11,14 +14,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import com.example.android.projet.db_storage.RetrofitService
+import com.example.android.projet.entities.Pharmacie
+import com.example.android.projet.entities.Ville
+import com.example.android.projet.local_storage.RoomService
+import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.content_drawer2.*
-
-
+import kotlinx.android.synthetic.main.content_menu_profile.*
+import kotlinx.android.synthetic.main.fragment_list_pharmacie.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var  fragment: Fragment = Fragment()
+    lateinit var listdata:List<Pharmacie>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,24 +48,36 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+
+
+
         val pos = intent.getIntExtra("pos",0)
 
-        val list = getData()
+        val call = RetrofitService.endpoint.getPharmacies()
+        call.enqueue(object: Callback<List<Pharmacie>> {
+            override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
+                if(response?.isSuccessful!!) {
+                    val list = response.body()!!
+                    nom.text = list.get(pos).nom
+                    adresse.text = list.get(pos).adresse
+                    horaire_ouverture.text = "2015"//list.get(pos).horaire_ouverture
+                    horaire_fermeture.text ="2019" //list.get(pos).horaire_fermeture
+                    caisse.text = list.get(pos).caisse
+                    ville.text =findVille(list.get(pos).id_ville!!).nomV
+                    lien_fb.text = list.get(pos).lien_fb
+                    lien_localisation.text = list.get(pos).lien_localisation
 
-        nom.text = list.get(pos).nom
-        adresse.text = list.get(pos).adresse
-        horaire.text = list.get(pos).horaireO
-        jours.text = list.get(pos).joursO
-        phone.text = list.get(pos). numeroTel
-        pageFB.text = list.get(pos).pageFB
-        localisation.text = list.get(pos).localisation
-
-
-        navView.setNavigationItemSelectedListener(this)
-
+                    navView.setNavigationItemSelectedListener(this@DrawerActivity2)
+                }
+                else {
+                    Toast.makeText(this@DrawerActivity2,"fail 2!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<List<Pharmacie>>?, t: Throwable?) {
+                Toast.makeText(this@DrawerActivity2,t?.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
-
-
 
 
     override fun onBackPressed() {
@@ -68,7 +95,6 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return true
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -76,29 +102,24 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
             R.id.nav_mes_pharmacies -> {
 
                 val intent = Intent(this,Menu_profile::class.java)
-               /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                 startActivity(intent)
             }
 
             R.id.nav_mes_pharmacies_de_garde -> {
                 val intent = Intent(this,MapActivity::class.java)
-               /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                 startActivity(intent)
-
             }
 
             R.id.nav_mes_commandes-> {
                 var fragment = MesCommandesFragment()
                 showFragment(fragment)
                 showHide(nom)
-                showHide(horaire)
-                showHide(jours)
+                showHide(horaire_ouverture)
+                showHide(horaire_fermeture)
                 showHide(adresse)
-                showHide(phone)
-                showHide(localisation)
-                showHide(pageFB)
+                showHide(caisse)
+                showHide(lien_localisation)
+                showHide(lien_fb)
                 showHide(textView10)
                 showHide(textView12)
                 showHide(textView14)
@@ -115,12 +136,12 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 var fragment = NouvelleCommandeFragment()
                 showFragment(fragment)
                 showHide(nom)
-                showHide(horaire)
-                showHide(jours)
+                showHide(horaire_ouverture)
+                showHide(horaire_fermeture)
                 showHide(adresse)
-                showHide(phone)
-                showHide(localisation)
-                showHide(pageFB)
+                showHide(caisse)
+                showHide(lien_localisation)
+                showHide(lien_fb)
                 showHide(textView10)
                 showHide(textView12)
                 showHide(textView14)
@@ -128,7 +149,6 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 showHide(textView8)
                 showHide(textView18)
             }
-
 
 
             R.id.nav_deconnecter -> {
@@ -165,81 +185,4 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         transaction.addToBackStack(null)
         transaction.commit()
     }
-
-    fun getData(): List<Pharm> {
-        val list = mutableListOf<Pharm>()
-        list.add(
-            Pharm(
-                "pharmacie1",
-                "Bab Zouar",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie2",
-                "Oued Smar",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie3",
-                "Harrache",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie4",
-                "Ben Aknoun",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie5",
-                "Tipaza",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie6",
-                "Rouiba",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        return list
-    }
-
 }

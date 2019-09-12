@@ -1,9 +1,13 @@
 package com.example.android.projet
 
 
+import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.text.TextUtils
+import android.text.TextUtils.replace
+import android.view.ActionMode
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -13,16 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.content_menu_profile.*
-import kotlinx.android.synthetic.main.fragment_nouvelle_commande.*
-import kotlin.String.Companion as String1
 
 
-class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
 
-    //val PLACE_PIKCER_REQUEST : Int = 1
+class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
 
     var  fragment: Fragment = Fragment()
 
@@ -39,41 +39,30 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        val adapter = PharmacieAdapter(this!!,getData())
-        listPharmacies.adapter = adapter
-        listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
-
-            val intent = Intent(this,DrawerActivity2::class.java)
-            intent.putExtra("pos", i)
-            startActivity(intent)
-        }
-
-        navView.setNavigationItemSelectedListener(this)
-
-        /*pickBtn.setOnClickListener { //PlacePicker Code
-            val builder : PlacePicker.IntentBuilder = PlacePicker.IntentBuilder()
-            val intent : Intent
-
-            try {
-                intent = builder.build(this)
-                startActivityForResult(intent,PLACE_PIKCER_REQUEST)
+        val call = RetrofitService.endpoint.getPharmacies()
+        //var adapter:PharmacieAdapter?=null
+        call.enqueue(object: Callback<List<Pharmacie>> {
+            override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
+                if(response?.isSuccessful!!) {
+                    val p = response.body()!!
+                    val adapter = PharmacieAdapter(this@Menu_profile,p)
+                    listPharmacies.adapter = adapter
+                    listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
+                        val intent = Intent(this@Menu_profile, DrawerActivity2::class.java)
+                        intent.putExtra("pos", "i")
+                        startActivity(intent)
+                    }
+                    navView.setNavigationItemSelectedListener(this@Menu_profile)
+                }
+                else {
+                    Toast.makeText(this@Menu_profile,"fail 2!", Toast.LENGTH_SHORT).show()
+                }
             }
-            catch (e : GooglePlayServicesRepairableException)
-            {
-                e.printStackTrace()
+            override fun onFailure(call: Call<List<Pharmacie>>?, t: Throwable?) {
+                Toast.makeText(this@Menu_profile,t?.message, Toast.LENGTH_SHORT).show()
             }
-            catch (e : GooglePlayServicesNotAvailableException)
-            {
-                e.printStackTrace()
-            }*/
+        })
     }
-
-   /* protected fun onUpPressed() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        startActivity(intent)
-        finish()
-    }*/
 
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -90,7 +79,6 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return true
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -98,19 +86,12 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
             R.id.nav_mes_pharmacies -> {
 
                 val intent = Intent(this,Menu_profile::class.java)
-
-               /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                 startActivity(intent)
             }
 
             R.id.nav_mes_pharmacies_de_garde -> {
-
                 showHide(listPharmacies)
                 val intent = Intent(this,MapActivity::class.java)
-
-               /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                 startActivity(intent)
             }
 
@@ -164,83 +145,4 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
         transaction.addToBackStack(null)
         transaction.commit()
     }
-
-    fun getData(): List<Pharm> {
-        val list = mutableListOf<Pharm>()
-        list.add(
-            Pharm(
-                "pharmacie1",
-                "Bab Zouar",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie2",
-                "Oued Smar",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie3",
-                "Harrache",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie4",
-                "Ben Aknoun",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie5",
-                "Tipaza",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie6",
-                "Rouiba",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        return list
-    }
-
-
-
 }

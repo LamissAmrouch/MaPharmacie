@@ -2,12 +2,18 @@ package com.example.android.projet
 
 
 import android.os.Bundle
+import android.telephony.SmsManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.navigation.findNavController
+/*import com.twilio.http.TwilioRestClient
+import com.twilio.rest.api.v2010.account.MessageCreator
+import com.twilio.type.PhoneNumber */
 import kotlinx.android.synthetic.main.fragment_fragment1.*
+
 
 
 class Fragment1 : Fragment() {
@@ -18,21 +24,22 @@ class Fragment1 : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fragment1, container, false)
-    }
 
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        var nss = arguments?.getInt("nss")
+        var bundle = bundleOf("nss" to nss)
         commencer.setOnClickListener { view ->
-            // view.findNavController().navigate(R.id.action_fragment1_to_listPharmacieFragment)
             view.findNavController().navigate(R.id.action_fragment1_to_menu_profile2)
         }
+
         inscrire.setOnClickListener { view ->
             view.findNavController().navigate(R.id.action_fragment1_to_inscrireFragment)
         }
 
         connecter.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_fragment1_to_connecterFragment)
+            view.findNavController().navigate(R.id.action_fragment1_to_connecterFragment,bundle)
         }
     }
 

@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.example.android.projet.entities.Pharmacie
+import retrofit2.Call
 
-class PharmacieAdapter (val ctx: Context, val data:List<Pharm>): BaseAdapter() {
+class PharmacieAdapter (val ctx: Context, val data: List<Pharmacie>): BaseAdapter() {
 
     override fun getItem(p0: Int)= data.get(p0)
 
@@ -23,7 +25,7 @@ class PharmacieAdapter (val ctx: Context, val data:List<Pharm>): BaseAdapter() {
             val textView = view?.findViewById(R.id.nomPharmacie) as TextView
             val textView2 = view?.findViewById(R.id.adressePharmacie) as TextView
             holder = ViewHolder(textView,textView2)
-            view?.setTag(holder)
+            view.setTag(holder)
         }
         else {
             holder = view.tag as ViewHolder

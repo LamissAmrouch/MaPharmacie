@@ -7,7 +7,8 @@ import com.example.android.projet.entities.Ville
 interface VilleDAO {
     @Query("select * from ville where nomV=:nom")
     fun getVillesByNom(nom:String):List<Ville>
-
+    @Query("select * from ville where isSynchronized=0")
+    fun getVilleToSynchronize(): Ville
     @Query("select * from ville where id=:id")
     fun getVille(id:Int):List<Ville>
 
