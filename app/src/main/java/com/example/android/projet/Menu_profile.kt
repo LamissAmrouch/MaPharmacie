@@ -108,8 +108,9 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
 
             R.id.nav_page_accuiel-> {
-
                 val intent = Intent(this,MainActivity::class.java)
+                val nss = intent.getIntExtra("nss",0)
+                intent.putExtra("nss",nss )
                 startActivity(intent)
             }
 
@@ -140,6 +141,10 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_deconnecter -> {
+                val intent = Intent(this,MainActivity::class.java)
+                intent.putExtra("nss", 0)
+                startActivity(intent)
+
             }
 
         }

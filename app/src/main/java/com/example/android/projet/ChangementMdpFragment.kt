@@ -53,13 +53,26 @@ class ChangementMdpFragment : Fragment() {
                             if (user != null) {
                                 user.mot_de_passe= newMdp1
                                 user.first=0
-                                RetrofitService.endpoint.updateUtilisateur(user)
 
-                                val intent = Intent(context, Menu_profile::class.java)
-                                intent.putExtra("nss", nss);
-                                startActivity(intent)
-
-                            } else{
+                                val call2 = RetrofitService.endpoint.updateUtilisateur(user,nss)
+                                call2.enqueue(object: Callback<String> {
+                                    override fun onResponse(call: Call<String>?, response: Response<String>?) {
+                                        if (response?.isSuccessful!!) {
+                                            Toast.makeText(
+                                                activity,
+                                                "success updated",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            val intent = Intent(context, Menu_profile::class.java)
+                                            intent.putExtra("nss", nss);
+                                            startActivity(intent)
+                                        }
+                                    }
+                                    override fun onFailure(call: Call<String>?, t: Throwable?) {
+                                        Toast.makeText(activity!!,t?.message, Toast.LENGTH_SHORT).show()
+                                    }
+                                 })
+                            }else{
                                 Toast.makeText(activity, "Erreur d'authentification", Toast.LENGTH_SHORT).show()
                             }
                         }

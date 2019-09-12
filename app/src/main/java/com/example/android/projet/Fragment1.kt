@@ -14,7 +14,7 @@ import androidx.navigation.findNavController
 import com.twilio.rest.api.v2010.account.MessageCreator
 import com.twilio.type.PhoneNumber */
 import kotlinx.android.synthetic.main.fragment_fragment1.*
-
+import org.jetbrains.anko.support.v4.intentFor
 
 
 class Fragment1 : Fragment() {
@@ -30,6 +30,9 @@ class Fragment1 : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         var nss = arguments?.getInt("nss")
+
+      //  val nss1 = intent.getIntExtra("nss",0)
+
         var bundle = bundleOf("nss" to nss)
         commencer.setOnClickListener { view ->
             view.findNavController().navigate(R.id.action_fragment1_to_menu_profile2)

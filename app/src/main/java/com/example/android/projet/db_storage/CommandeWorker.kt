@@ -41,11 +41,17 @@ class CommandeWorker(val ctx: Context, val workParamters: WorkerParameters) : Li
                     commande.isSynchronized=1
                     RoomService.appDatabase.getCommandeDAO().updateCommande(commande)
                     future.set(Result.success())
-                    Toast.makeText(ctx,"works!",Toast.LENGTH_SHORT).show()
 
+                    val call1 = RetrofitService.endpoint.updateCommande(commande)
+                    call1.enqueue(object : Callback<String> {
+                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                            Toast.makeText(ctx,"cmd updated!",Toast.LENGTH_SHORT).show()
+                        }
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                        }
+                    })
                 } else {
                     future.set(Result.retry())
-
                 }
             }
         })

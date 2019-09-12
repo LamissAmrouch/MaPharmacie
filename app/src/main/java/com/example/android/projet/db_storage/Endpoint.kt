@@ -15,14 +15,16 @@ interface Endpoint {
     fun getVilles(): Call<List<Ville>>
 
     @GET("ville/{id}")
-    fun getVilleById(@Path("id")id:Int):Call<List<Ville>>
+    fun getVilleById(@Path("id") id: Int): Call<List<Ville>>
 
     @GET("user/{numero_tel}/{mot_de_passe}")
-    fun getUserByPhone(@Path("numero_tel")numero_tel:Int,
-                     @Path("mot_de_passe")mot_de_passe:String):Call<List<Utilisateur>>
+    fun getUserByPhone(
+        @Path("numero_tel") numero_tel: Int,
+        @Path("mot_de_passe") mot_de_passe: String
+    ): Call<List<Utilisateur>>
 
     @GET("user/{nss}")
-    fun getUserByNSS(@Path("nss")nss:Int):Call<List<Utilisateur>>
+    fun getUserByNSS(@Path("nss") nss: Int): Call<List<Utilisateur>>
 
 
     @GET("pharmacies")
@@ -38,21 +40,24 @@ interface Endpoint {
     fun getPlayersByTeamName(): Call<List<Player>>*/
 
     @POST("addville")
-    fun addVille(@Body ville:Ville): Call<String>
+    fun addVille(@Body ville: Ville): Call<String>
 
     @POST("sendSms")
-    fun sendSMS(@Body password :String): Call<String>
+    fun sendSMS(@Body password: String): Call<String>
 
     @POST("addpharmacie")
-    fun addPharmacie(@Body pharmacie:Pharmacie): Call<String>
+    fun addPharmacie(@Body pharmacie: Pharmacie): Call<String>
 
     @POST("adduser")
     fun addUtilisateur(@Body utilisateur: Utilisateur): Call<String>
 
-    @POST("updateuser")
-    fun updateUtilisateur(@Body utilisateur: Utilisateur): Call<String>
+    @POST("updateuser/{nss}")
+    fun updateUtilisateur(@Body utilisateur: Utilisateur, @Path("nss") nss: Int): Call<String>
 
     @POST("addcommande")
     fun addCommande(@Body commande: Commande): Call<String>
+
+    @POST("updatecommande")
+    abstract fun updateCommande(@Body commande: Commande): Call<String>
 
 }

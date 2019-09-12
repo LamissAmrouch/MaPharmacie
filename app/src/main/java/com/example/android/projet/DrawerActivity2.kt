@@ -186,6 +186,10 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
             R.id.nav_deconnecter -> {
+
+                val intent = Intent(this,MainActivity::class.java)
+                intent.putExtra("nss", 0)
+                startActivity(intent)
             }
 
         }

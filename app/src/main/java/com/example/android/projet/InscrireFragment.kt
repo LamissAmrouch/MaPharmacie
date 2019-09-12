@@ -78,11 +78,8 @@ class InscrireFragment : Fragment() {
             val call = RetrofitService.endpoint.sendSMS(password)
             call.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>?, response: Response<String>?) {
-                    if (response?.isSuccessful!!) {
-                       // Toast.makeText(      activity, "Vous recevrez votre code en SMS",Toast.LENGTH_SHORT).show()
-                    } //else Toast.makeText(activity, "SMS non envoyé ", Toast.LENGTH_SHORT).show()
+                    if (response?.isSuccessful!!) {}
                 }
-
                 override fun onFailure(call: Call<String>?, t: Throwable?) {
                     Toast.makeText(activity, "SMS non envoyé ", Toast.LENGTH_SHORT).show()
                 }

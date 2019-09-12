@@ -56,17 +56,14 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
 
         val adapter = ArrayAdapter( activity , android.R.layout.simple_spinner_item,list_of_items)
 
-
-       /* val adapter2 = createFromResource(
-            activity, android.R.array.list_of_items, R.layout.my_spinner)*/
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner!!.adapter = adapter
 
         photoOrdonnanceBtn.setOnClickListener {
             showPictureDialog()
-    }
+        }
+
     }
 
     private fun showPictureDialog() {
@@ -95,7 +92,7 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
         startActivityForResult(intent, CAMERA)
     }
 
-     override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+    override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
 
