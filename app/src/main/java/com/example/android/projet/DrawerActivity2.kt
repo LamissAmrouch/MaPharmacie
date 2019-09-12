@@ -33,7 +33,7 @@ import retrofit2.Response
 class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var  fragment: Fragment = Fragment()
-    lateinit var listdata:List<Pharmacie>
+    var villeN:String= ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +48,6 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-
-
-
         val pos = intent.getIntExtra("pos",0)
 
         val call = RetrofitService.endpoint.getPharmacies()
@@ -63,7 +60,23 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     horaire_ouverture.text = "2015"//list.get(pos).horaire_ouverture
                     horaire_fermeture.text ="2019" //list.get(pos).horaire_fermeture
                     caisse.text = list.get(pos).caisse
-                    ville.text =findVille(list.get(pos).id_ville!!).nomV
+
+                    val call1 = RetrofitService.endpoint.getVilleById(list.get(pos).id_ville!!)
+                    call1.enqueue(object: Callback<List<Ville>> {
+                        override fun onResponse(call: Call<List<Ville>>?, response: Response<List<Ville>>?) {
+                            if(response?.isSuccessful!!) {
+                                ville.text =response.body()?.get(0)?.nomV!!
+                            }
+                            else {
+                                Toast.makeText(this@DrawerActivity2,"fail ville!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        override fun onFailure(call: Call<List<Ville>>?, t: Throwable?) {
+                            Toast.makeText(this@DrawerActivity2,t?.message, Toast.LENGTH_SHORT).show()
+                        }
+                    })
+
+
                     lien_fb.text = list.get(pos).lien_fb
                     lien_localisation.text = list.get(pos).lien_localisation
 
@@ -78,7 +91,6 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
         })
     }
-
 
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

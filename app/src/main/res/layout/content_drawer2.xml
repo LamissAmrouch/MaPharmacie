@@ -182,7 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.41" />
+            app:layout_constraintGuide_begin="278dp" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline26"
@@ -196,7 +196,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="297dp" />
+            app:layout_constraintGuide_begin="379dp" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline28"
@@ -214,6 +214,7 @@
             android:ems="10"
             android:fontFamily="@font/aclonica"
             android:inputType="textPersonName"
+            android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView15"
             app:layout_constraintEnd_toEndOf="parent"

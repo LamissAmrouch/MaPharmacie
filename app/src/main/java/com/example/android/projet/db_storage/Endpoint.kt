@@ -8,10 +8,14 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface Endpoint {
     @GET("villes")
     fun getVilles(): Call<List<Ville>>
+
+    @GET("ville/{id}")
+    fun getVilleById(@Path("id")id:Int):Call<List<Ville>>
 
     @GET("pharmacies")
     fun getPharmacies(): Call<List<Pharmacie>>

@@ -17,8 +17,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
+import com.example.android.projet.db_storage.RetrofitService
+import com.example.android.projet.entities.Pharmacie
 import kotlinx.android.synthetic.main.content_menu_profile.*
-
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -132,7 +137,6 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun showHide(view: View) {
         if (view.visibility == View.VISIBLE) {
-
             view.visibility = View.INVISIBLE
         }
     }
