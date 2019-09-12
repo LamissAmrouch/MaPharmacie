@@ -27,25 +27,11 @@
                 app:popExitAnim="@anim/nav_default_pop_exit_anim" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"/>
         <action android:id="@+id/action_fragment1_to_menu_profile2" app:destination="@id/menu_profile2"/>
-        <action android:id="@+id/action_fragment1_to_listPharmacieFragment"
-                app:destination="@id/listPharmacieFragment"/>
-        <action android:id="@+id/action_fragment1_to_listPharmacieFragment2"
-                app:destination="@id/listPharmacieFragment"/>
     </fragment>
     <fragment android:id="@+id/changementMdpFragment" android:name="com.example.android.projet.ChangementMdpFragment"
               android:label="Ma Pharmacie" tools:layout="@layout/fragment_changement_mdp">
         <action android:id="@+id/action_changementMdpFragment_to_menu_profile2" app:destination="@id/menu_profile2"/>
     </fragment>
-    <fragment android:id="@+id/listPharmacieFragment" android:name="com.example.android.projet.ListPharmacieFragment"
-              android:label="Ma Pharmacie" tools:layout="@layout/fragment_list_pharmacie">
-        <action android:id="@+id/action_listPharmacieFragment_to_detailsPharmacieFragment"
-                app:destination="@id/detailsPharmacieFragment" app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-    </fragment>
-    <fragment android:id="@+id/detailsPharmacieFragment"
-              android:name="com.example.android.projet.DetailsPharmacieFragment"
-              android:label="Ma Pharmacie" tools:layout="@layout/fragment_details_pharmacie"/>
     <activity android:id="@+id/menu_profile2" android:name="com.example.android.projet.Menu_profile"
               android:label="app_bar_menu_profile" tools:layout="@layout/app_bar_menu_profile"/>
 </navigation>

@@ -20,8 +20,7 @@ import java.sql.Date
 
 )
 data class Commande (
-    var nom:String,
-    var date_envoi:Date,
+    var date_envoi:String,
     var photo_ordonnance:String,
     var etat_traitement:String,
     val id_pharmacie: Int,

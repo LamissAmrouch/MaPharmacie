@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.example.android.projet.entities.Commande
 
-class CommandeAdapter(val ctx: Context, val data:List<cmd>): BaseAdapter() {
+class CommandeAdapter(val ctx: Context, val data:List<Commande>): BaseAdapter() {
 
         override fun getItem(p0: Int)= data.get(p0)
 
@@ -30,9 +31,9 @@ class CommandeAdapter(val ctx: Context, val data:List<cmd>): BaseAdapter() {
                 holder = view.tag as ViewHolder
             }
 
-            holder.textView.setText(data.get(i).nom)
-            holder.textView2.setText(data.get(i).date)
-            holder.textView3.setText(data.get(i).etat)
+            holder.textView.setText("Commande N°"+data.get(i).idC)
+            holder.textView2.setText(data.get(i).date_envoi)
+            holder.textView3.setText("Etat: "+data.get(i).etat_traitement)
 
             return view
         }

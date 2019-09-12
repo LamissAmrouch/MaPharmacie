@@ -25,7 +25,6 @@ import com.example.android.projet.local_storage.RoomService
 import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.content_drawer2.*
 import kotlinx.android.synthetic.main.content_menu_profile.*
-import kotlinx.android.synthetic.main.fragment_list_pharmacie.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +32,6 @@ import retrofit2.Response
 class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var  fragment: Fragment = Fragment()
-    var villeN:String= ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
