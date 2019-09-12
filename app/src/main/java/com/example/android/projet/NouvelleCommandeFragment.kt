@@ -32,6 +32,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 import android.media.MediaScannerConnection
+import android.widget.ArrayAdapter.createFromResource
 
 
 class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -54,7 +55,13 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
         var list_of_items = arrayOf("Pharmacie 1", "Pharmacie 2", "Pharmacie 3")
 
         val adapter = ArrayAdapter( activity , android.R.layout.simple_spinner_item,list_of_items)
+
+
+       /* val adapter2 = createFromResource(
+            activity, android.R.array.list_of_items, R.layout.my_spinner)*/
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         spinner!!.adapter = adapter
 
         photoOrdonnanceBtn.setOnClickListener {

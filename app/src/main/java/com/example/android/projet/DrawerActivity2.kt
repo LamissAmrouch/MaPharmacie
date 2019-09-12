@@ -68,15 +68,6 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -85,11 +76,15 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
             R.id.nav_mes_pharmacies -> {
 
                 val intent = Intent(this,Menu_profile::class.java)
+               /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                 startActivity(intent)
             }
 
             R.id.nav_mes_pharmacies_de_garde -> {
                 val intent = Intent(this,MapActivity::class.java)
+               /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                 startActivity(intent)
 
             }

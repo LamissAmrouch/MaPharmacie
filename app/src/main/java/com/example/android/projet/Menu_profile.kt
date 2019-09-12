@@ -68,7 +68,12 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }*/
     }
 
-
+   /* protected fun onUpPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
+        finish()
+    }*/
 
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -85,16 +90,6 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -103,6 +98,9 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
             R.id.nav_mes_pharmacies -> {
 
                 val intent = Intent(this,Menu_profile::class.java)
+
+               /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                 startActivity(intent)
             }
 
@@ -110,8 +108,10 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
                 showHide(listPharmacies)
                 val intent = Intent(this,MapActivity::class.java)
-                startActivity(intent)
 
+               /* intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
+                startActivity(intent)
             }
 
             R.id.nav_mes_commandes-> {
@@ -127,8 +127,6 @@ class Menu_profile :  AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 showFragment(fragment)
                 showHide(listPharmacies)
             }
-
-
 
             R.id.nav_deconnecter -> {
             }
