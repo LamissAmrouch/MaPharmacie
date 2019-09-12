@@ -25,7 +25,7 @@ class PharmacieAdapter (val ctx: Context, val data: List<Pharmacie>): BaseAdapte
             val textView = view?.findViewById(R.id.nomPharmacie) as TextView
             val textView2 = view?.findViewById(R.id.adressePharmacie) as TextView
             holder = ViewHolder(textView,textView2)
-            view?.setTag(holder)
+            view.setTag(holder)
         }
         else {
             holder = view.tag as ViewHolder

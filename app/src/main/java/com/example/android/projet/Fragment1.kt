@@ -12,10 +12,6 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.navigation.findNavController
 import com.example.android.projet.local_storage.RoomService
-import com.twilio.http.TwilioRestClient
-import com.twilio.rest.api.v2010.account.Message
-import com.twilio.rest.api.v2010.account.MessageCreator
-import com.twilio.type.PhoneNumber
 /*import com.twilio.http.TwilioRestClient
 import com.twilio.rest.api.v2010.account.MessageCreator
 import com.twilio.type.PhoneNumber */
@@ -42,7 +38,7 @@ class Fragment1 : Fragment() {
 
     }
 
-    @SuppressLint("UnlocalizedSms")
+  //  @SuppressLint("UnlocalizedSms")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         var nss = arguments?.getInt("nss")

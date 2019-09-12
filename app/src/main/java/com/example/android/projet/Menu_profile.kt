@@ -17,17 +17,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import com.example.android.projet.db_storage.RetrofitService
 import com.example.android.projet.entities.Pharmacie
 import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.content_menu_profile.*
-
+import kotlinx.android.synthetic.main.content_menu_profile.listPharmacies
+import kotlinx.android.synthetic.main.fragment_list_pharmacie.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
-    var  fragment: Fragment = Fragment()
+    var fragment: Fragment = Fragment()
+    lateinit var listdata:List<Pharmacie>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,25 +45,38 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-
-
-        val adapter = PharmacieAdapter(this,getData())
-        listPharmacies.adapter = adapter
-        listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
-
-            val intent = Intent(this,DrawerActivity2::class.java)
-            intent.putExtra("pos", "i")
-            startActivity(intent)
-        }
-
-        navView.setNavigationItemSelectedListener(this)
-
-
+        val call = RetrofitService.endpoint.getPharmacies()
+        //var adapter:PharmacieAdapter?=null
+        call.enqueue(object: Callback<List<Pharmacie>> {
+            override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
+                if(response?.isSuccessful!!) {
+                    val p = response.body()!!
+                    val adapter = PharmacieAdapter(this@Menu_profile,p)
+                    listPharmacies.adapter = adapter
+                    listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
+                             val intent = Intent(this@Menu_profile, DrawerActivity2::class.java)
+                            intent.putExtra("pos", "i")
+                            startActivity(intent)
+                        }
+                        navView.setNavigationItemSelectedListener(this@Menu_profile)
+                    }
+                else {
+                    Toast.makeText(this@Menu_profile,"fail 2!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<List<Pharmacie>>?, t: Throwable?) {
+                Toast.makeText(this@Menu_profile,t?.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onBackPressed() {
@@ -90,7 +111,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_mes_pharmacies -> {
 
-                val intent = Intent(this,Menu_profile::class.java)
+                val intent = Intent(this, Menu_profile::class.java)
                 startActivity(intent)
             }
 
@@ -101,7 +122,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 showHide(listPharmacies)
             }
 
-            R.id.nav_mes_commandes-> {
+            R.id.nav_mes_commandes -> {
 
                 var fragment = MesCommandesFragment()
                 showFragment(fragment)
@@ -133,15 +154,13 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-
-    fun showFragment(fragment:Fragment)
-       {
-           val manager = supportFragmentManager
-           val transaction = manager.beginTransaction()
-           transaction.replace(R.id.container, fragment)
-           transaction.addToBackStack(null)
-           transaction.commit()
-       }
+    fun showFragment(fragment: Fragment) {
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 
     fun showHide(view: View) {
         if (view.visibility == View.VISIBLE) {
@@ -150,90 +169,12 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun removeFragment(fragment:Fragment)
-    {
+    fun removeFragment(fragment: Fragment) {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
         transaction.remove(fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
-
-    fun getData(): List<Pharmacie> {
-        val list = RoomService.appDatabase.getPharmacieDAO().getAllPharmacies()
-        /*list.add(
-            Pharm(
-                "pharmacie1",
-                "Bab Zouar",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie2",
-                "Oued Smar",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie3",
-                "Harrache",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie4",
-                "Ben Aknoun",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie5",
-                "Tipaza",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie6",
-                "Rouiba",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        ) */
-        return list
-    }
-
-
 }
+

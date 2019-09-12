@@ -16,7 +16,6 @@ import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.fragment_changement_mdp.*
 import kotlinx.android.synthetic.main.fragment_connecter.*
 import kotlinx.android.synthetic.main.fragment_fragment1.*
-import org.jetbrains.anko.support.v4.toast
 
 
 class ChangementMdpFragment : Fragment() {

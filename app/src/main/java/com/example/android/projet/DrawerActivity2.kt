@@ -12,12 +12,15 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.android.projet.db_storage.RetrofitService
 import com.example.android.projet.entities.Pharmacie
 import com.example.android.projet.entities.Ville
 import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.content_drawer2.*
+import kotlinx.android.synthetic.main.fragment_list_pharmacie.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +29,7 @@ import retrofit2.Response
 class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var  fragment: Fragment = Fragment()
-
+    lateinit var listdata:List<Pharmacie>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drawer2)
@@ -40,27 +43,32 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        val pos = intent.getIntExtra("pos",0)
 
+        val call = RetrofitService.endpoint.getPharmacies()
+        call.enqueue(object: Callback<List<Pharmacie>> {
+            override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
+                if(response?.isSuccessful!!) {
+                    val list = response.body()!!
+                    nom.text = list.get(pos).nom
+                    adresse.text = list.get(pos).adresse
+                    horaire_ouverture.text = "2015"//list.get(pos).horaire_ouverture
+                    horaire_fermeture.text ="2019" //list.get(pos).horaire_fermeture
+                    caisse.text = list.get(pos).caisse
+                    ville.text =findVille(list.get(pos).id_ville!!).nomV
+                    lien_fb.text = list.get(pos).lien_fb
+                    lien_localisation.text = list.get(pos).lien_localisation
 
-
-     val pos = intent.getIntExtra("pos",0)
-
-         val list = getData()
-
-        nom.text = list.get(pos).nom
-        adresse.text = list.get(pos).adresse
-        horaire_ouverture.text = "2015"//list.get(pos).horaire_ouverture
-        horaire_fermeture.text ="2019" //list.get(pos).horaire_fermeture
-        caisse.text = list.get(pos).caisse
-        ville.text =findVille(list.get(pos).id_ville!!).nomV
-        lien_fb.text = list.get(pos).lien_fb
-        lien_localisation.text = list.get(pos).lien_localisation
-
-
-        navView.setNavigationItemSelectedListener(this)
-
-      /*  val nav = findNavController(R.id.navHost3)
-        NavigationUI.setupActionBarWithNavController(this,nav)*/
+                    navView.setNavigationItemSelectedListener(this@DrawerActivity2)
+                }
+                else {
+                    Toast.makeText(this@DrawerActivity2,"fail 2!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<List<Pharmacie>>?, t: Throwable?) {
+                Toast.makeText(this@DrawerActivity2,t?.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun findVille(id:Int): Ville {
@@ -219,100 +227,6 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         transaction.remove(fragment)
         transaction.addToBackStack(null)
         transaction.commit()
-    }
-
-    fun getData(): List<Pharmacie>? {
-       // val list = RoomService.appDatabase.getPharmacieDAO().getAllPharmacies()
-        val call = RetrofitService.endpoint.getPharmacies()
-        var list= List<Pharmacie>()
-        call.enqueue(object: Callback<List<Pharmacie>> {
-            override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
-                if(response?.isSuccessful!!) {
-                     list = response.body()
-                    return list
-                }
-                else {
-                    Toast.makeText(this@DrawerActivity2,"fail 2!", Toast.LENGTH_SHORT).show()
-                    return null
-                }
-            }
-            override fun onFailure(call: Call<List<Pharmacie>>?, t: Throwable?) {
-                Toast.makeText(this@DrawerActivity2,"fail1!", Toast.LENGTH_SHORT).show()
-                return null
-            }
-        })
-        /*list.add(
-            Pharm(
-                "pharmacie1",
-                "Bab Zouar",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie2",
-                "Oued Smar",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie3",
-                "Harrache",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie4",
-                "Ben Aknoun",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie5",
-                "Tipaza",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        )
-        list.add(
-            Pharm(
-                "pharmacie6",
-                "Rouiba",
-                "De 8h à 21h",
-                "7/7",
-                "0558757779",
-                "www.facebook.com/MaPharmacie",
-                "www.googlemap.com/MaPharmacie"
-
-            )
-        ) */
-        //return list
     }
 
 }
