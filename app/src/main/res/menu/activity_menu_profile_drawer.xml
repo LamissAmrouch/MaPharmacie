@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:showIn="navigation_view">
+      tools:showIn="navigation_view"
+        android:id="@+id/nav_menu" >
 
     <group android:checkableBehavior="single">
 
 
         <item
+                android:id="@+id/nav_page_accuiel"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="Page Accueil"
+                />
+
+        <item
                 android:id="@+id/nav_mes_pharmacies"
                 android:icon="@drawable/ic_storage_black_24dp"
-                android:title="Mes pharmacies"/>
+                android:title="Mes pharmacies"
+                />
 
         <item
                 android:id="@+id/nav_mes_pharmacies_de_garde"
@@ -18,16 +26,19 @@
 
         <item
                 android:id="@+id/nav_mes_commandes"
+                android:visible="false"
                 android:icon="@drawable/ic_assignment_black_24dp"
                 android:title="Mes commandes"/>
 
         <item
                 android:id="@+id/nav_lancer_commande"
+                android:visible="false"
                 android:icon="@drawable/ic_mode_edit_black_24dp"
                 android:title="Nouvelle commande"/>
 
         <item
                 android:id="@+id/nav_deconnecter"
+                android:visible="false"
                 android:icon="@drawable/ic_exit_to_app_black_24dp"
                 android:title="Déconnecter"/>
     </group>

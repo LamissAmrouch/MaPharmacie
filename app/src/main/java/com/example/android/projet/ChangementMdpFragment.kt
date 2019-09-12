@@ -16,6 +16,10 @@ import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.fragment_changement_mdp.*
 import kotlinx.android.synthetic.main.fragment_connecter.*
 import kotlinx.android.synthetic.main.fragment_fragment1.*
+import android.content.Intent
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ChangementMdpFragment : Fragment() {
@@ -30,26 +34,48 @@ class ChangementMdpFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         confirmChgMdp.setOnClickListener { view ->
             var nss = arguments?.getInt("nss")
+
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("nss", nss);
+
             var oldMdp = ancienMdp.text.toString()
             var newMdp1 = nouveauMdp1.text.toString()
             var newMdp2 = nouveauMdp2.text.toString()
-            Toast.makeText(activity, "nss = "+ nss!! + "oldMdp = "+ oldMdp, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(activity, "nss = "+ nss!! + "oldMdp = "+ oldMdp, Toast.LENGTH_SHORT).show()
+            if(newMdp1.equals(newMdp2)){
+                //var user = RoomService.appDatabase.getUtilisateurDAO().getUtilisateur(nss)
+                val call = RetrofitService.endpoint.getUserByNSS(
+                    nss!!)
+                call.enqueue(object: Callback<List<Utilisateur>> {
+                    override fun onResponse(call: Call<List<Utilisateur>>?, response: Response<List<Utilisateur>>?) {
+                        if(response?.isSuccessful!!) {
+                            val user = response.body()!!.get(0)
+                            if (user != null) {
+                                user.mot_de_passe= newMdp1
+                                user.first=0
+                                RetrofitService.endpoint.updateUtilisateur(user)
 
-            if (RoomService.appDatabase.getUtilisateurDAO().checkOldPassword(nss!!, oldMdp) != null) {
-                if(newMdp1.equals(newMdp2)){
-                    var user = RoomService.appDatabase.getUtilisateurDAO().getUtilisateur(nss)
-                    user.mot_de_passe= newMdp1
-                    user.first=0
-                    RoomService.appDatabase.getUtilisateurDAO().updateUtilisateur(user)
-                    RetrofitService.endpoint.updateUtilisateur(user)
-                    view.findNavController().navigate(R.id.action_changementMdpFragment_to_menu_profile2,bundleOf("nss" to nss))
-                }
-                else {
-                    Toast.makeText(activity, "Les mots de passe ne sont pas similaires", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(activity, "mot de passe erroné", Toast.LENGTH_SHORT).show()
-            }
+                                val intent = Intent(context, Menu_profile::class.java)
+                                intent.putExtra("nss", nss);
+                                startActivity(intent)
+
+                            } else{
+                                Toast.makeText(activity, "Erreur d'authentification", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        else {
+                            Toast.makeText(activity!!,"fail 2!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    override fun onFailure(call: Call<List<Utilisateur>>?, t: Throwable?) {
+                        Toast.makeText(activity!!,t?.message, Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+               }
+            else {
+                   Toast.makeText(activity, "Les mots de passe ne sont pas similaires", Toast.LENGTH_SHORT).show()
+               }
         }
     }
 }

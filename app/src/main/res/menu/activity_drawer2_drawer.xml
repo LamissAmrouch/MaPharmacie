@@ -5,6 +5,11 @@
 
     <group android:checkableBehavior="single">
 
+        <item
+                android:id="@+id/nav_page_accuiel"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="Page Accueil"/>
+
 
         <item
                 android:id="@+id/nav_mes_pharmacies"
@@ -19,15 +24,18 @@
         <item
                 android:id="@+id/nav_mes_commandes"
                 android:icon="@drawable/ic_assignment_black_24dp"
+                android:visible="false"
                 android:title="Mes commandes"/>
         <item
                 android:id="@+id/nav_lancer_commande"
+                android:visible="false"
                 android:icon="@drawable/ic_mode_edit_black_24dp"
                 android:title="Nouvelle commande"/>
 
 
         <item
                 android:id="@+id/nav_deconnecter"
+                android:visible="false"
                 android:icon="@drawable/ic_exit_to_app_black_24dp"
                 android:title="Déconnecter"/>
     </group>

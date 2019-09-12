@@ -18,8 +18,10 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import com.example.android.projet.db_storage.RetrofitService
 import com.example.android.projet.entities.Pharmacie
+import kotlinx.android.synthetic.main.activity_menu_profile.*
 import kotlinx.android.synthetic.main.content_menu_profile.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +43,23 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
+
+        val nss = intent.getIntExtra("nss",0)
+        Toast.makeText(this@Menu_profile,"nss= "+nss, Toast.LENGTH_SHORT).show()
+        val menu:Menu=navView.menu
+        if(nss!=0){
+           //nav_menu.findItem(R.id.nav_settings).setVisible(false);
+
+            menu.findItem(R.id.nav_lancer_commande).setVisible(true)
+            menu.findItem(R.id.nav_mes_commandes).setVisible(true)
+            menu.findItem(R.id.nav_deconnecter).setVisible(true)
+        }
+        else{
+            menu.findItem(R.id.nav_lancer_commande).setVisible(false)
+            menu.findItem(R.id.nav_mes_commandes).setVisible(false)
+            menu.findItem(R.id.nav_deconnecter).setVisible(false)
+        }
+
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -87,6 +106,12 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
+
+            R.id.nav_page_accuiel-> {
+
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+            }
 
             R.id.nav_mes_pharmacies -> {
 

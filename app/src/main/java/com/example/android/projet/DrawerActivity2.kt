@@ -47,6 +47,21 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         toggle.syncState()
 
         val pos = intent.getIntExtra("pos",0)
+        val nss = intent.getIntExtra("nss",0)
+        val menu:Menu=navView.menu
+        if(nss!=0){
+            //nav_menu.findItem(R.id.nav_settings).setVisible(false);
+
+            menu.findItem(R.id.nav_lancer_commande).setVisible(true)
+            menu.findItem(R.id.nav_mes_commandes).setVisible(true)
+            menu.findItem(R.id.nav_deconnecter).setVisible(true)
+        }
+        else{
+            menu.findItem(R.id.nav_lancer_commande).setVisible(false)
+            menu.findItem(R.id.nav_mes_commandes).setVisible(false)
+            menu.findItem(R.id.nav_deconnecter).setVisible(false)
+        }
+
 
         val call = RetrofitService.endpoint.getPharmacies()
         call.enqueue(object: Callback<List<Pharmacie>> {
@@ -63,6 +78,9 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     call1.enqueue(object: Callback<List<Ville>> {
                         override fun onResponse(call: Call<List<Ville>>?, response: Response<List<Ville>>?) {
                             if(response?.isSuccessful!!) {
+                                Toast.makeText(this@DrawerActivity2,
+                                    "id ville ="+list.get(pos).id_ville!! + " ville = "+ response.body()?.get(0)?.nomV!!, Toast.LENGTH_SHORT).show()
+
                                 ville.text =response.body()?.get(0)?.nomV!!
                             }
                             else {
@@ -108,6 +126,12 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
+
+            R.id.nav_page_accuiel-> {
+
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+            }
 
             R.id.nav_mes_pharmacies -> {
 

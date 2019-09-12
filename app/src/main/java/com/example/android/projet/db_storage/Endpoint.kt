@@ -17,6 +17,14 @@ interface Endpoint {
     @GET("ville/{id}")
     fun getVilleById(@Path("id")id:Int):Call<List<Ville>>
 
+    @GET("user/{numero_tel}/{mot_de_passe}")
+    fun getUserByPhone(@Path("numero_tel")numero_tel:Int,
+                     @Path("mot_de_passe")mot_de_passe:String):Call<List<Utilisateur>>
+
+    @GET("user/{nss}")
+    fun getUserByNSS(@Path("nss")nss:Int):Call<List<Utilisateur>>
+
+
     @GET("pharmacies")
     fun getPharmacies(): Call<List<Pharmacie>>
 

@@ -77,19 +77,26 @@
             app:layout_constraintTop_toTopOf="@+id/guideline2" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline12" app:layout_constraintVertical_bias="0.0"
             android:textAlignment="center"/>
+
     <EditText
+            android:id="@+id/mdp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:id="@+id/mdp"
-            android:hint="Mot de passe" android:fontFamily="@font/aclonica" android:layout_marginEnd="32dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="32dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:passwordToggleEnabled="true"
+            android:fontFamily="@font/aclonica"
+            android:hint="Mot de passe"
+            android:inputType="textPassword"
             android:textAlignment="viewStart"
-            android:layout_marginTop="12dp" app:layout_constraintTop_toTopOf="@+id/guideline10"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/guideline11"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintBottom_toTopOf="@+id/guideline11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline10"
+            app:layout_constraintVertical_bias="0.0" />
     <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                                 android:id="@+id/guideline2" app:layout_constraintGuide_begin="378dp"
                                                 android:orientation="horizontal"/>
