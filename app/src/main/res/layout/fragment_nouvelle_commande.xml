@@ -16,7 +16,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="32dp"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            android:textAlignment="center" android:fontFamily="@font/aclonica" android:textColor="#009C6A"
+            android:textAlignment="center" android:fontFamily="@font/aclonica" android:textColor="#68c49d"
             android:id="@+id/textView11"/>
 
     <Spinner
@@ -28,9 +28,9 @@
             app:layout_constraintHorizontal_bias="1.0" app:layout_constraintTop_toBottomOf="@+id/textView11"
             android:layout_marginTop="80dp"
             android:fontFamily="@font/aclonica"
-            android:textSize="18sp" style="@android:style/Widget.DeviceDefault.Light.Spinner"
+            android:textSize="18sp"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/guideline28"
-            app:layout_constraintVertical_bias="0.0" android:layout_marginStart="90dp"/>
+            app:layout_constraintVertical_bias="0.0" android:layout_marginStart="90dp" style="@style/MySpinnerLook"/>
     <TextView
             android:text="Capturer l'ordonnance"
             android:layout_width="wrap_content"

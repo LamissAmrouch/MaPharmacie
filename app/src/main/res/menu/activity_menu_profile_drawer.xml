@@ -20,15 +20,11 @@
                 android:id="@+id/nav_mes_commandes"
                 android:icon="@drawable/ic_assignment_black_24dp"
                 android:title="Mes commandes"/>
+
         <item
                 android:id="@+id/nav_lancer_commande"
                 android:icon="@drawable/ic_mode_edit_black_24dp"
                 android:title="Nouvelle commande"/>
-
-        <item
-                android:id="@+id/nav_mon_profil"
-                android:icon="@drawable/ic_person_black_24dp"
-                android:title="Mon profil"/>
 
         <item
                 android:id="@+id/nav_deconnecter"
