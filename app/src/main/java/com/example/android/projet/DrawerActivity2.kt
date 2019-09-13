@@ -62,6 +62,7 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
             menu.findItem(R.id.nav_deconnecter).setVisible(false)
         }
 
+        emptyfield()
 
         val call = RetrofitService.endpoint.getPharmacies()
         call.enqueue(object: Callback<List<Pharmacie>> {
@@ -73,14 +74,10 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     horaire_ouverture.text = "2015"//list.get(pos).horaire_ouverture
                     horaire_fermeture.text ="2019" //list.get(pos).horaire_fermeture
                     caisse.text = list.get(pos).caisse
-
                     val call1 = RetrofitService.endpoint.getVilleById(list.get(pos).id_ville!!)
                     call1.enqueue(object: Callback<List<Ville>> {
                         override fun onResponse(call: Call<List<Ville>>?, response: Response<List<Ville>>?) {
                             if(response?.isSuccessful!!) {
-                                Toast.makeText(this@DrawerActivity2,
-                                    "id ville ="+list.get(pos).id_ville!! + " ville = "+ response.body()?.get(0)?.nomV!!,
-                                    Toast.LENGTH_SHORT).show()
 
                                 ville.text =response.body()?.get(0)?.nomV!!
                             }
@@ -107,6 +104,17 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 Toast.makeText(this@DrawerActivity2,t?.message, Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun emptyfield() {
+        nom.text=""
+        adresse.text =""
+        horaire_ouverture.text = ""//list.get(pos).horaire_ouverture
+        horaire_fermeture.text ="" //list.get(pos).horaire_fermeture
+        caisse.text = ""
+        ville.text=""
+        lien_fb.text=""
+        lien_localisation.text=""
     }
 
     override fun onBackPressed() {

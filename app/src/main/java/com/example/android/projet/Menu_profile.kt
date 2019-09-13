@@ -79,7 +79,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     listPharmacies.adapter = adapter
                     listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
                         val intent = Intent(this@Menu_profile, DrawerActivity2::class.java)
-                        intent.putExtra("pos", "i")
+                        intent.putExtra("pos", i)
                         intent.putExtra("nss", nss)
                         startActivity(intent)
                     }
