@@ -42,14 +42,14 @@ class ConnecterFragment : Fragment() {
                             caisse.text.clear()
                             mdp.text.clear()
 
-                            val nss = arguments?.getInt("nss")
+                            val nss = user.NSS
                             val firstTime = user.first
-                            if (arguments?.getInt("nss") != null || firstTime==1)
+                            if (firstTime==1)
                             {
                                 var bundle = bundleOf("nss" to user.NSS)
                                 view.findNavController().navigate(R.id.action_connecterFragment_to_changementMdpFragment,bundle)
                             }
-                            else // la premiere connexion il doit changer son mot de passe
+                            else
                             {
                                 //var bundle = bundleOf("nss" to user.NSS)
                                 val intent = Intent(context, Menu_profile::class.java)

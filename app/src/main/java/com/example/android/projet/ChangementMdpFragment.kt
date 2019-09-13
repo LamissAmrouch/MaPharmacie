@@ -43,7 +43,6 @@ class ChangementMdpFragment : Fragment() {
             var newMdp2 = nouveauMdp2.text.toString()
             //Toast.makeText(activity, "nss = "+ nss!! + "oldMdp = "+ oldMdp, Toast.LENGTH_SHORT).show()
             if(newMdp1.equals(newMdp2)){
-                //var user = RoomService.appDatabase.getUtilisateurDAO().getUtilisateur(nss)
                 val call = RetrofitService.endpoint.getUserByNSS(
                     nss!!)
                 call.enqueue(object: Callback<List<Utilisateur>> {

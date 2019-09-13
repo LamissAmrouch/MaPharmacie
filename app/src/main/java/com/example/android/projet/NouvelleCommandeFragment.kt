@@ -33,6 +33,12 @@ import java.io.FileOutputStream
 import java.util.*
 import android.media.MediaScannerConnection
 import android.widget.ArrayAdapter.createFromResource
+import com.example.android.projet.db_storage.RetrofitService
+import com.example.android.projet.entities.Pharmacie
+import kotlinx.android.synthetic.main.content_menu_profile.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -52,13 +58,33 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        var list_of_items = arrayOf("Pharmacie 1", "Pharmacie 2", "Pharmacie 3")
 
-        val adapter = ArrayAdapter( activity , android.R.layout.simple_spinner_item,list_of_items)
+        /* to get pharmacies list from db */
+        val call = RetrofitService.endpoint.getPharmacies()
+        //var adapter:PharmacieAdapter?=null
+        call.enqueue(object: Callback<List<Pharmacie>> {
+            override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
+                if(response?.isSuccessful!!) {
+                    val list_of_items: ArrayList<String> = ArrayList()
+                    val pharmacies = response.body()!!
+                    for(pharm in pharmacies ){
+                        list_of_items.add(pharm.nom)
+                    }
+                    val adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item,list_of_items)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinner!!.adapter = adapter
+                }
+                else {
+                    Toast.makeText(activity,"fail 2!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<List<Pharmacie>>?, t: Throwable?) {
+                Toast.makeText(activity,t?.message, Toast.LENGTH_SHORT).show()
+            }
+        })
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        spinner!!.adapter = adapter
+
 
         photoOrdonnanceBtn.setOnClickListener {
             showPictureDialog()
