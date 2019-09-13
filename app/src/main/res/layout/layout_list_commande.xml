@@ -7,35 +7,45 @@
                                                    android:layout_height="match_parent" android:id="@+id/linearLayout2">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/nom_commande" android:fontFamily="@font/aclonica"
-            android:textSize="18sp"
-            android:textColor="#000000" android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/etat_commande"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            android:id="@+id/nom_commande"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-    />
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="22dp" android:id="@+id/date_commande" android:fontFamily="@font/aclonica"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/aclonica"
+            android:textColor="#000000"
             android:textSize="18sp"
-            android:textColor="#000000" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/etat_commande" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/nom_commande" app:layout_constraintHorizontal_bias="0.5"
-    />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/date_commande"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/aclonica"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nom_commande" />
 
     <TextView
             android:id="@+id/etat_commande"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/aclonica"
             android:textColor="#68c49d"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/nom_commande"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_commande" />
 </androidx.constraintlayout.widget.ConstraintLayout>

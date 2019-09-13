@@ -33,6 +33,8 @@ interface Endpoint {
     @GET("pharmacie/{nom}")
     fun getPharmacieByName(@Path("nom")nom: String): Call<List<Pharmacie>>
 
+    @GET("villesname")
+    fun getVilleNameByPharmacie(): Call<List<Ville>>
 
     @GET("commandes")
     fun getCommandes(): Call<List<Commande>>
@@ -62,6 +64,6 @@ interface Endpoint {
     fun addCommande(@Body commande: Commande): Call<String>
 
     @POST("updatecommande")
-    abstract fun updateCommande(@Body commande: Commande): Call<String>
+    fun updateCommande(@Body commande: Commande): Call<String>
 
 }

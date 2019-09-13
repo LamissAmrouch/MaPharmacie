@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.android.projet.entities.Pharmacie
+import com.example.android.projet.entities.Ville
 import retrofit2.Call
 
-class PharmacieAdapter (val ctx: Context, val data: List<Pharmacie>): BaseAdapter() {
+class PharmacieAdapter (val ctx: Context, val data: List<Pharmacie>,val data2: List<Ville>): BaseAdapter() {
 
     override fun getItem(p0: Int)= data.get(p0)
 
@@ -23,8 +24,11 @@ class PharmacieAdapter (val ctx: Context, val data: List<Pharmacie>): BaseAdapte
         if (view == null) {
             view = LayoutInflater.from(ctx).inflate(R.layout.layout_list_view,parent,false)
             val textView = view?.findViewById(R.id.nomPharmacie) as TextView
-            val textView2 = view?.findViewById(R.id.adressePharmacie) as TextView
-            holder = ViewHolder(textView,textView2)
+            //val textView2 = view?.findViewById(R.id.adressePharmacie) as TextView
+            val textView3 = view?.findViewById(R.id.villePharmacie) as TextView
+            holder = ViewHolder(textView,
+                //textView2,
+                textView3)
             view.setTag(holder)
         }
         else {
@@ -32,9 +36,12 @@ class PharmacieAdapter (val ctx: Context, val data: List<Pharmacie>): BaseAdapte
 
         }
         holder.textView.setText(data.get(i).nom)
-        holder.textView2.setText(data.get(i).adresse)
+        //holder.textView2.setText(data.get(i).adresse)
+        holder.textView3.setText(data2.get(i).nomV)
         return view
     }
 
-    private class ViewHolder(val textView: TextView, val textView2: TextView)
+    private class ViewHolder(val textView: TextView,
+                             //val textView2: TextView,
+                             val textView3: TextView)
 }

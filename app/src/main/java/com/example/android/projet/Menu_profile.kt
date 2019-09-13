@@ -30,8 +30,7 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
+import com.example.android.projet.entities.Ville
 
 
 class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -75,15 +74,27 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
                 if(response?.isSuccessful!!) {
                     val p = response.body()!!
-                    val adapter = PharmacieAdapter(this@Menu_profile,p)
-                    listPharmacies.adapter = adapter
-                    listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
-                        val intent = Intent(this@Menu_profile, DrawerActivity2::class.java)
-                        intent.putExtra("pos", i)
-                        intent.putExtra("nss", nss)
-                        startActivity(intent)
-                    }
-                    navView.setNavigationItemSelectedListener(this@Menu_profile)
+                    val call2= RetrofitService.endpoint.getVilleNameByPharmacie()
+                    call2.enqueue(object: Callback<List<Ville>> {
+                        override fun onResponse(
+                            call: Call<List<Ville>>?,
+                            response: Response<List<Ville>>?
+                        ) {
+                            val noms = response?.body()
+                            val adapter = PharmacieAdapter(this@Menu_profile,p,noms!!)
+                            listPharmacies.adapter = adapter
+                            listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
+                                val intent = Intent(this@Menu_profile, DrawerActivity2::class.java)
+                                intent.putExtra("pos", i)
+                                intent.putExtra("nss", nss)
+                                startActivity(intent)
+                            }
+                            navView.setNavigationItemSelectedListener(this@Menu_profile)
+                        }
+                        override fun onFailure(call: Call<List<Ville>>?, t: Throwable?) {
+                            Toast.makeText(this@Menu_profile,t?.message, Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 }
                 else {
                     Toast.makeText(this@Menu_profile,"fail 2!", Toast.LENGTH_SHORT).show()
