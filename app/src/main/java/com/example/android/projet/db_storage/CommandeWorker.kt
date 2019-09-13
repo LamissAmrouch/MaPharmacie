@@ -23,7 +23,7 @@ class CommandeWorker(val ctx: Context, val workParamters: WorkerParameters) : Li
     @SuppressLint("RestrictedApi")
     override fun startWork(): ListenableFuture<Result> {
         future = SettableFuture.create<Result>()
-        val commande = RoomService.appDatabase.getCommandeDAO().getCommandeToSynchronize()
+        val commande = RoomService.appDatabase.getCommandeDAO().getCommande(1).get(0)
         addCommande(commande)
         return future
     }
@@ -38,7 +38,7 @@ class CommandeWorker(val ctx: Context, val workParamters: WorkerParameters) : Li
             @SuppressLint("RestrictedApi")
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
-                    commande.isSynchronized=1
+                    //commande.isSynchronized=1
                     RoomService.appDatabase.getCommandeDAO().updateCommande(commande)
                     future.set(Result.success())
 

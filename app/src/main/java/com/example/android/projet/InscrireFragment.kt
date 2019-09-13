@@ -102,7 +102,7 @@ class InscrireFragment : Fragment() {
         val constraints =
             Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build()
         val req = OneTimeWorkRequest.Builder(UtilisateurWorker::class.java).addTag(
-            "td1"
+            "userTag"
         ).setConstraints(
             constraints
         ).build()

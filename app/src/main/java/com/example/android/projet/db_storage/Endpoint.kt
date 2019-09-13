@@ -30,6 +30,10 @@ interface Endpoint {
     @GET("pharmacies")
     fun getPharmacies(): Call<List<Pharmacie>>
 
+    @GET("pharmacie/{nom}")
+    fun getPharmacieByName(@Path("nom")nom: String): Call<List<Pharmacie>>
+
+
     @GET("commandes")
     fun getCommandes(): Call<List<Commande>>
 

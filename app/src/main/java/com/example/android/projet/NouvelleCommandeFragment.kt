@@ -33,12 +33,20 @@ import java.io.FileOutputStream
 import java.util.*
 import android.media.MediaScannerConnection
 import android.widget.ArrayAdapter.createFromResource
+import androidx.navigation.findNavController
+import androidx.work.*
+import com.example.android.projet.db_storage.CommandeWorker
 import com.example.android.projet.db_storage.RetrofitService
+import com.example.android.projet.db_storage.UtilisateurWorker
+import com.example.android.projet.entities.Commande
 import com.example.android.projet.entities.Pharmacie
+import com.example.android.projet.local_storage.RoomService
 import kotlinx.android.synthetic.main.content_menu_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 
 class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -58,10 +66,8 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         /* to get pharmacies list from db */
         val call = RetrofitService.endpoint.getPharmacies()
-        //var adapter:PharmacieAdapter?=null
         call.enqueue(object: Callback<List<Pharmacie>> {
             override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
                 if(response?.isSuccessful!!) {
@@ -88,6 +94,50 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
 
         photoOrdonnanceBtn.setOnClickListener {
             showPictureDialog()
+        }
+
+
+        EnregistrerBtn.setOnClickListener {
+            val d = SimpleDateFormat("dd-MM-yyyy")
+            val dateFormat = d.format(Calendar.getInstance().time)
+            val nss = Integer.parseInt(arguments?.get("nss").toString())
+
+            val pharmaName= spinner.selectedItem.toString()
+            val call1 = RetrofitService.endpoint.getPharmacieByName(pharmaName)
+            call1.enqueue(object: Callback<List<Pharmacie>> {
+                override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
+                    if(response?.isSuccessful!!) {
+                            val idPharmacie = response.body()?.get(0)?.idP!!
+                            //Toast.makeText(activity,"nsss = " +nss+ " id p "+response.body()?.get(0)?.idP!!, Toast.LENGTH_SHORT).show()
+                            val cmd = Commande(
+                                dateFormat,
+                                "photo.jpg",
+                                "Reçu",
+                                nss,
+                                idPharmacie)
+                                val call = RetrofitService.endpoint.addCommande(cmd)
+                                call.enqueue(object : Callback<String> {
+                                override fun onResponse(call: Call<String>?, response: Response<String>?) {
+                                    if(response?.isSuccessful!!) {
+                                        Toast.makeText(activity,"successful", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                                override fun onFailure(call: Call<String>?, t: Throwable?) {
+                                    Toast.makeText(activity,t?.message, Toast.LENGTH_SHORT).show()
+                                }
+                            })
+
+
+                        //Toast.makeText(activity,"commande sauvgardé !", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(activity,"fail 2!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: Call<List<Pharmacie>>?, t: Throwable?) {
+                    Toast.makeText(activity,t?.message, Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
     }
@@ -126,7 +176,7 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
         {
             if (data != null)
             {
-                val contentURI = data!!.data
+                val contentURI = data.data
                 try
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, contentURI)
@@ -159,14 +209,11 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
             (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
         // have the object build the directory structure, if needed.
         Log.d("fee",wallpaperDirectory.toString())
-        if (!wallpaperDirectory.exists())
-        {
-
+        if (!wallpaperDirectory.exists()){
             wallpaperDirectory.mkdirs()
         }
 
-        try
-        {
+        try {
             Log.d("heel",wallpaperDirectory.toString())
             val f = File(wallpaperDirectory, ((Calendar.getInstance()
                 .getTimeInMillis()).toString() + ".jpg"))
@@ -192,7 +239,17 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
         private const val IMAGE_DIRECTORY = "/Ordonnances"
     }
 
-
+    private fun sync() {
+        val constraints =
+            Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build()
+        val req = OneTimeWorkRequest.Builder(CommandeWorker::class.java).addTag(
+            "cmdTag"
+        ).setConstraints(
+            constraints
+        ).build()
+        val workManager = WorkManager.getInstance()
+        workManager.enqueueUniqueWork("work", ExistingWorkPolicy.REPLACE, req)
+    }
 
     // pour le spinner des pharmacies
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {

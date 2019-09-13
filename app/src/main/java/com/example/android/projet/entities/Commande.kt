@@ -10,23 +10,20 @@ import java.sql.Date
     foreignKeys = arrayOf(
         ForeignKey(entity = Utilisateur::class,
             parentColumns = arrayOf("NSS"),
-            childColumns = arrayOf("id_utilisateur"),
-            onDelete = ForeignKey.CASCADE),
+            childColumns = arrayOf("id_utilisateur")),
         ForeignKey(entity = Pharmacie::class,
             parentColumns = arrayOf("idP"),
-            childColumns = arrayOf("id_pharmacie"),
-            onDelete = ForeignKey.CASCADE)
+            childColumns = arrayOf("id_pharmacie"))
     )
 
 )
 data class Commande (
     var date_envoi:String,
     var photo_ordonnance:String,
-    var etat_traitement:String,
-    val id_pharmacie: Int,
+    var etat_traitement:String="Reçu",
     val id_utilisateur: Int,
-    var isSynchronized:Int =0
-    ) {
+    val id_pharmacie: Int
+    ){
     @PrimaryKey(autoGenerate = true)
     var idC:Int?=null
 }

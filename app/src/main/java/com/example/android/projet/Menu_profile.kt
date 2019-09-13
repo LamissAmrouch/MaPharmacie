@@ -26,6 +26,12 @@ import kotlinx.android.synthetic.main.content_menu_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -44,8 +50,8 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
 
+        /* get nss from fragment */
         val nss = intent.getIntExtra("nss",0)
-        Toast.makeText(this@Menu_profile,"nss= "+nss, Toast.LENGTH_SHORT).show()
         val menu:Menu=navView.menu
         if(nss!=0){
            //nav_menu.findItem(R.id.nav_settings).setVisible(false);
@@ -127,15 +133,18 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_mes_commandes-> {
-
                 var fragment = MesCommandesFragment()
                 showFragment(fragment)
                 showHide(listPharmacies)
             }
 
             R.id.nav_lancer_commande -> {
+                val nss = intent.getIntExtra("nss",0)
 
+                /* send data to fragment */
+                var bundle = bundleOf("nss" to nss)
                 var fragment = NouvelleCommandeFragment()
+                fragment.arguments=bundle
                 showFragment(fragment)
                 showHide(listPharmacies)
             }
@@ -144,7 +153,6 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this,MainActivity::class.java)
                 intent.putExtra("nss", 0)
                 startActivity(intent)
-
             }
 
         }
