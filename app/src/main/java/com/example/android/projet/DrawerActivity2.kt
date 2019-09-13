@@ -79,7 +79,8 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         override fun onResponse(call: Call<List<Ville>>?, response: Response<List<Ville>>?) {
                             if(response?.isSuccessful!!) {
                                 Toast.makeText(this@DrawerActivity2,
-                                    "id ville ="+list.get(pos).id_ville!! + " ville = "+ response.body()?.get(0)?.nomV!!, Toast.LENGTH_SHORT).show()
+                                    "id ville ="+list.get(pos).id_ville!! + " ville = "+ response.body()?.get(0)?.nomV!!,
+                                    Toast.LENGTH_SHORT).show()
 
                                 ville.text =response.body()?.get(0)?.nomV!!
                             }
@@ -128,24 +129,34 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
         when (item.itemId) {
 
             R.id.nav_page_accuiel-> {
-
+                val nss = intent.getIntExtra("nss",0)
                 val intent = Intent(this,MainActivity::class.java)
+                intent.putExtra("nss",nss )
                 startActivity(intent)
             }
 
             R.id.nav_mes_pharmacies -> {
-
+                val nss = intent.getIntExtra("nss",0)
                 val intent = Intent(this,Menu_profile::class.java)
+                intent.putExtra("nss",nss )
                 startActivity(intent)
             }
 
             R.id.nav_mes_pharmacies_de_garde -> {
+                val nss = intent.getIntExtra("nss",0)
                 val intent = Intent(this,MapActivity::class.java)
+                intent.putExtra("nss",nss )
                 startActivity(intent)
             }
 
             R.id.nav_mes_commandes-> {
+                val nss = intent.getIntExtra("nss",0)
+                var bundle = bundleOf("nss" to nss)
                 var fragment = MesCommandesFragment()
+
+                fragment.arguments=bundle
+
+
                 showFragment(fragment)
                 showHide(nom)
                 showHide(horaire_ouverture)
@@ -166,8 +177,12 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
             R.id.nav_lancer_commande -> {
+                val nss = intent.getIntExtra("nss",0)
+                var bundle = bundleOf("nss" to nss)
 
                 var fragment = NouvelleCommandeFragment()
+                fragment.arguments=bundle
+
                 showFragment(fragment)
                 showHide(nom)
                 showHide(horaire_ouverture)
@@ -186,7 +201,6 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
             R.id.nav_deconnecter -> {
-
                 val intent = Intent(this,MainActivity::class.java)
                 intent.putExtra("nss", 0)
                 startActivity(intent)

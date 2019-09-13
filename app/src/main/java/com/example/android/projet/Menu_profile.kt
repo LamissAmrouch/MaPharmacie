@@ -80,6 +80,7 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     listPharmacies.setOnItemClickListener { adapterView, view, i, l ->
                         val intent = Intent(this@Menu_profile, DrawerActivity2::class.java)
                         intent.putExtra("pos", "i")
+                        intent.putExtra("nss", nss)
                         startActivity(intent)
                     }
                     navView.setNavigationItemSelectedListener(this@Menu_profile)
@@ -114,26 +115,33 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
 
             R.id.nav_page_accuiel-> {
-                val intent = Intent(this,MainActivity::class.java)
                 val nss = intent.getIntExtra("nss",0)
-                intent.putExtra("nss",nss )
+                val intent = Intent(this,MainActivity::class.java)
+                intent.putExtra("nss",nss)
                 startActivity(intent)
             }
 
             R.id.nav_mes_pharmacies -> {
-
+                val nss = intent.getIntExtra("nss",0)
                 val intent = Intent(this,Menu_profile::class.java)
+                intent.putExtra("nss", nss)
                 startActivity(intent)
             }
 
             R.id.nav_mes_pharmacies_de_garde -> {
                 showHide(listPharmacies)
+                val nss = intent.getIntExtra("nss",0)
                 val intent = Intent(this,MapActivity::class.java)
+                intent.putExtra("nss", nss)
                 startActivity(intent)
             }
 
             R.id.nav_mes_commandes-> {
+                val nss = intent.getIntExtra("nss",0)
+                var bundle = bundleOf("nss" to nss)
+
                 var fragment = MesCommandesFragment()
+                fragment.arguments=bundle
                 showFragment(fragment)
                 showHide(listPharmacies)
             }

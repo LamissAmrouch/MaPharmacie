@@ -33,6 +33,10 @@ class MesCommandesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val call = RetrofitService.endpoint.getCommandes()
+        /* get nss and resend it */
+        var nss = arguments?.getInt("nss")
+
+
         call.enqueue(object: Callback<List<Commande>> {
             override fun onResponse(call: Call<List<Commande>>?, response: Response<List<Commande>>?) {
                 if(response?.isSuccessful!!) {

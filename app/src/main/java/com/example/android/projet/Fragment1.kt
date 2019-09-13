@@ -1,6 +1,7 @@
 package com.example.android.projet
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.telephony.SmsManager
 import androidx.fragment.app.Fragment
@@ -31,11 +32,14 @@ class Fragment1 : Fragment() {
         super.onActivityCreated(savedInstanceState)
         var nss = arguments?.getInt("nss")
 
-      //  val nss1 = intent.getIntExtra("nss",0)
-
         var bundle = bundleOf("nss" to nss)
         commencer.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_fragment1_to_menu_profile2)
+             /* send nss to activity */
+            val intent = Intent(context, Menu_profile::class.java)
+            intent.putExtra("nss", nss);
+            startActivity(intent)
+
+            //view.findNavController().navigate(R.id.action_fragment1_to_menu_profile2)
         }
 
         inscrire.setOnClickListener { view ->
