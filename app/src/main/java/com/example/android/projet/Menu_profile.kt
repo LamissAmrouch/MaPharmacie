@@ -84,7 +84,9 @@ class Menu_profile : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         }
         else{
-
+            menu.findItem(R.id.nav_lancer_commande).setVisible(false)
+            menu.findItem(R.id.nav_mes_commandes).setVisible(false)
+            menu.findItem(R.id.nav_deconnecter).setVisible(false)
             navView.getHeaderView(0).userName.visibility=View.INVISIBLE
             navView.getHeaderView(0).userAvatar.visibility=View.INVISIBLE
 

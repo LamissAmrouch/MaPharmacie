@@ -23,8 +23,12 @@ import com.example.android.projet.entities.Pharmacie
 import com.example.android.projet.entities.Ville
 import com.example.android.projet.local_storage.RoomService
 import androidx.navigation.ui.NavigationUI
+import com.example.android.projet.entities.Utilisateur
 import kotlinx.android.synthetic.main.content_drawer2.*
 import kotlinx.android.synthetic.main.content_menu_profile.*
+import kotlinx.android.synthetic.main.nav_header_drawer2.view.*
+import kotlinx.android.synthetic.main.nav_header_menu_profile.view.*
+import kotlinx.android.synthetic.main.nav_header_menu_profile.view.userAvatar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,11 +59,31 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
             menu.findItem(R.id.nav_lancer_commande).setVisible(true)
             menu.findItem(R.id.nav_mes_commandes).setVisible(true)
             menu.findItem(R.id.nav_deconnecter).setVisible(true)
+
+            val call1= RetrofitService.endpoint.getUserByNSS(nss)
+            call1.enqueue(object: Callback<List<Utilisateur>> {
+                override fun onResponse(call: Call<List<Utilisateur>>?, response: Response<List<Utilisateur>>?) {
+                    if(response?.isSuccessful!!) {
+                        navView.getHeaderView(0).userNameDrawer.text=
+                            response.body()?.get(0)?.nom +
+                                    " " +
+                                    response.body()?.get(0)?.prenom
+                    }
+                    navView.getHeaderView(0).userNameDrawer.visibility=View.VISIBLE
+                    navView.getHeaderView(0).userAvatarDrawer.visibility=View.VISIBLE
+                }
+                override fun onFailure(call: Call<List<Utilisateur>>?, t: Throwable?) {
+                    Toast.makeText(this@DrawerActivity2,t?.message, Toast.LENGTH_SHORT).show()
+                }
+            })
+
         }
         else{
             menu.findItem(R.id.nav_lancer_commande).setVisible(false)
             menu.findItem(R.id.nav_mes_commandes).setVisible(false)
             menu.findItem(R.id.nav_deconnecter).setVisible(false)
+            navView.getHeaderView(0).userAvatarDrawer.visibility=View.INVISIBLE
+            navView.getHeaderView(0).userNameDrawer.visibility=View.INVISIBLE
         }
 
         emptyfield()
