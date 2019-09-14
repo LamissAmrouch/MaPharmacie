@@ -54,6 +54,7 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
 
     private val GALLERY = 1
     private val CAMERA = 2
+    var path:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -108,10 +109,9 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
                 override fun onResponse(call: Call<List<Pharmacie>>?, response: Response<List<Pharmacie>>?) {
                     if(response?.isSuccessful!!) {
                             val idPharmacie = response.body()?.get(0)?.idP!!
-                            //Toast.makeText(activity,"nsss = " +nss+ " id p "+response.body()?.get(0)?.idP!!, Toast.LENGTH_SHORT).show()
                             val cmd = Commande(
                                 dateFormat,
-                                "photo.jpg",
+                                path,
                                 "Reçu",
                                 nss,
                                 idPharmacie)
@@ -119,7 +119,7 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
                                 call.enqueue(object : Callback<String> {
                                 override fun onResponse(call: Call<String>?, response: Response<String>?) {
                                     if(response?.isSuccessful!!) {
-                                        Toast.makeText(activity,"successful", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(activity!!, "Commande crée!", Toast.LENGTH_SHORT).show()
                                     }
                                 }
                                 override fun onFailure(call: Call<String>?, t: Throwable?) {
@@ -179,10 +179,8 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
                 try
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, contentURI)
-                    val path = saveImage(bitmap)
-                    Toast.makeText(activity,path, Toast.LENGTH_SHORT).show()
-
-                    Toast.makeText(activity!!, "Image enregistrée !", Toast.LENGTH_SHORT).show()
+                    path = saveImage(bitmap)
+                    //Toast.makeText(activity,path, Toast.LENGTH_SHORT).show()
                     imageView2.setImageBitmap(bitmap)
 
                 }
@@ -198,8 +196,8 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
         {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
             imageView2.setImageBitmap(thumbnail)
-            saveImage(thumbnail)
-            Toast.makeText(activity!!, "Image enregistrée!", Toast.LENGTH_SHORT).show()
+            path = saveImage(thumbnail)
+            //Toast.makeText(activity!!, path, Toast.LENGTH_SHORT).show()
         }
     }
 
