@@ -159,7 +159,6 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
     fun choosePhotoFromGallary() {
         val galleryIntent = Intent(Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-
         startActivityForResult(galleryIntent, GALLERY)
     }
 
@@ -181,6 +180,8 @@ class NouvelleCommandeFragment : Fragment(), AdapterView.OnItemSelectedListener 
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, contentURI)
                     val path = saveImage(bitmap)
+                    Toast.makeText(activity,path, Toast.LENGTH_SHORT).show()
+
                     Toast.makeText(activity!!, "Image enregistrée !", Toast.LENGTH_SHORT).show()
                     imageView2.setImageBitmap(bitmap)
 

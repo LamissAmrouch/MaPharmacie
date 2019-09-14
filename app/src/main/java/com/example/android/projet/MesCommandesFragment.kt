@@ -32,9 +32,9 @@ class MesCommandesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val call = RetrofitService.endpoint.getCommandes()
-        /* get nss and resend it */
         var nss = arguments?.getInt("nss")
+        val call = RetrofitService.endpoint.getCommandesByIdUser(nss!!)
+        /* get nss and resend it */
 
 
         call.enqueue(object: Callback<List<Commande>> {

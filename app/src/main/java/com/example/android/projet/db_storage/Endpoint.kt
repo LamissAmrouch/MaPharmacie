@@ -39,6 +39,10 @@ interface Endpoint {
     @GET("commandes")
     fun getCommandes(): Call<List<Commande>>
 
+    @GET("commande/{nss}")
+    fun getCommandesByIdUser(@Path("nss") nss: Int): Call<List<Commande>>
+
+
     @GET("users")
     fun getUtilisateurs(): Call<List<Utilisateur>>
 
@@ -65,5 +69,6 @@ interface Endpoint {
 
     @POST("updatecommande")
     fun updateCommande(@Body commande: Commande): Call<String>
+
 
 }
