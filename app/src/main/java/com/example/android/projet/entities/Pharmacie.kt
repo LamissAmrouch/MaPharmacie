@@ -16,8 +16,8 @@ import java.sql.Timestamp
 data class Pharmacie (
     var nom:String,
     var adresse:String,
-    //var horaire_ouverture: Timestamp,
-  //  var horaire_fermeture:Timestamp,
+    var horaire_ouverture: String,
+    var horaire_fermeture: String,
     var lien_fb:String,
     var lien_localisation:String,
     val id_ville: Int?,

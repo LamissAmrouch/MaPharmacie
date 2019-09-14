@@ -47,21 +47,18 @@ class MainAct : AppCompatActivity(){
 
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val body:MultipartBody.Part  = MultipartBody.Part.createFormData("image", file.getName(), requestFile)
-        val descriptionString = "hello, this is description speaking"
-        val description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString)
+        //val descriptionString = "hello, this is description speaking"
+       // val description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString)
 
         val mApiService = ApiInterface.retrofit.create(ApiInterface::class.java)
-        val mService = mApiService.postAvatar(description, body)
-        mService.enqueue(object : Callback<Commande> {
-            override fun onResponse(call: Call<Commande>, response: Response<Commande>) {
-                val avatar = response.body()
-                //val returnedResponse = avatar.avatar_url
-                val returnedResponse =""
-                Toast.makeText(this@MainAct, "Returned $returnedResponse", Toast.LENGTH_LONG)
+        val mService = mApiService.postAvatar(body)
+        mService.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Toast.makeText(this@MainAct, "Returned"+ response.body()!!, Toast.LENGTH_LONG)
                     .show()
             }
 
-            override fun onFailure(call: Call<Commande>, t: Throwable) {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 call.cancel()
                 Toast.makeText(
                     this@MainAct,

@@ -12,12 +12,11 @@ import retrofit2.http.Part
 
 interface ApiInterface {
     @Multipart
-    @POST("users/avatar")
-    fun postAvatar(@Part("description") description: RequestBody,
-                   @Part("image") file: MultipartBody.Part): Call<Commande>
+    @POST("commande/ordonnanceImg")
+    fun postAvatar(@Part("image") file: MultipartBody.Part): Call<String>
 
     companion object {
-        val ENDPOINT = "http://192.168.1.25:8082/"
+        val ENDPOINT = "http://192.168.0.243:8082/"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(ENDPOINT)

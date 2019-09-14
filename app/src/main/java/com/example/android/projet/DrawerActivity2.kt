@@ -71,8 +71,8 @@ class DrawerActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     val list = response.body()!!
                     nom.text = list.get(pos).nom
                     adresse.text = list.get(pos).adresse
-                    horaire_ouverture.text = "2015"//list.get(pos).horaire_ouverture
-                    horaire_fermeture.text ="2019" //list.get(pos).horaire_fermeture
+                    horaire_ouverture.text = list.get(pos).horaire_ouverture
+                    horaire_fermeture.text = list.get(pos).horaire_fermeture
                     caisse.text = list.get(pos).caisse
                     val call1 = RetrofitService.endpoint.getVilleById(list.get(pos).id_ville!!)
                     call1.enqueue(object: Callback<List<Ville>> {
